@@ -5,7 +5,20 @@
   "projects": {
     "SocialApp": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "type": "component"
+        },
+        "@schematics/angular:service": {
+          "type": "service"
+        },
+        "@schematics/angular:interface": {
+          "type": "interface"
+        },
+        "@schematics/angular:directive": {
+          "type": "directive"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -88,5 +101,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "bf7f0c86-1f23-4599-8279-a2f56e88ba20"
   }
 }
