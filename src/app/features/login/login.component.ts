@@ -4,6 +4,7 @@ import { AuthService } from '../../core/auth/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscribable, Subscription } from 'rxjs';
+import { UserDataResponse } from '../../core/models/user-data.interface';
 
 @Component({
   selector: 'app-login',
@@ -59,10 +60,11 @@ export class LoginComponent {
       //   //create new subscription
       this.loginSub$ = this.authService.signIn(this.loginForm.value).subscribe(
         {
-          next: (resp) => {
-            if (resp) {
+          next: (resp: UserDataResponse) => {
+            if (resp.success) {
               console.log(resp);
-
+              localStorage.setItem("socialToken", resp.data.token);
+              localStorage.setItem("userData", JSON.stringify(resp.data.user))
             }
 
           }
