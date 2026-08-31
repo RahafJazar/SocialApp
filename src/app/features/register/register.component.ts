@@ -1,23 +1,64 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Subscribable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private fb = inject(FormBuilder);
   errorMsg: string = '';
   loading: boolean = false;
+  registerSub$: Subscription = new Subscription();
+  registerForm: FormGroup = this.fb.nonNullable.group({
+    name: ['', [
+      Validators.required,
+      Validators.minLength(3)
+    ]],
 
-  registerForm: FormGroup = new FormGroup({
+    username: [''],
+
+    email: ['', [
+      Validators.required,
+      Validators.email
+    ]],
+
+    dateOfBirth: ['', [
+      Validators.required
+    ]],
+
+    gender: ['', [
+      Validators.required
+    ]],
+
+    password: ['', [
+      Validators.required,
+      Validators.pattern(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+      )
+    ]],
+
+    rePassword: ['', [
+      Validators.required,
+      Validators.pattern(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+      )
+    ]]
+  }, {
+    validators: this.confirmPassword
+  })
+
+  /*
+  = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     username: new FormControl(''),//optional
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -25,7 +66,8 @@ export class RegisterComponent {
     gender: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)]),
     rePassword: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)])
-  }, { validators: this.confirmPassword, updateOn: 'submit' })
+  }, { validators: this.confirmPassword })
+  */
 
   submitForm(): void {
 
@@ -33,11 +75,15 @@ export class RegisterComponent {
       console.log(this.registerForm);
       this.loading = true
       //send data
-      this.authService.signUp(this.registerForm.value).subscribe(
+      //cancel previous subscription 
+      this.registerSub$.unsubscribe();
+      //create new subscription
+      this.registerSub$ = this.authService.signUp(this.registerForm.value).subscribe(
         {
           next: (resp) => {
             if (resp) {
               console.log(resp);
+
               //navigate  to login
               setTimeout(() => {
                 this.router.navigate(['/login'])
@@ -75,7 +121,7 @@ export class RegisterComponent {
   confirmPassword(group: AbstractControl) {
     //check if password !== repassword ==> set error in  the repassword control [mismatch]
     const password = group.get('password')?.value;
-    const repassword = group.get('rePasseord')?.value;
+    const repassword = group.get('rePassword')?.value;
 
     if (password != repassword) {
       group.get('rePassword')?.setErrors({ mismatch: true })
