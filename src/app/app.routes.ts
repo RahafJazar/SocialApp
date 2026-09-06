@@ -1,3 +1,4 @@
+import { guestGuard } from './core/auth/guards/guest-guard';
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { LoginComponent } from './features/login/login.component';
@@ -20,6 +21,7 @@ export const routes: Routes = [
     {
         path: '',
         component: AuthLayoutComponent,
+        canActivate: [guestGuard],
         children: [
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
@@ -29,8 +31,10 @@ export const routes: Routes = [
     {
         path: '',
         component: MainLayoutComponent,
+        canActivate: [authGuard],
         children: [
-            { path: 'feed', component: FeedComponent, canActivate: [authGuard] },
+            { path: '', redirectTo: 'feed', pathMatch: 'full' },
+            { path: 'feed', component: FeedComponent },
             { path: 'profile', component: ProfileComponent },
             { path: 'notifications', component: NotificationsComponent },
             { path: 'changePassword', component: ChangePasswordComponent }

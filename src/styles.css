@@ -8,6 +8,13 @@ body {
     font-family: 'SN Pro', sans-serif;
 }
 
+/*Components*/
+@layer components {
+    .navbar-li {
+        @apply flex items-center justify-center lg:gap-2 gap-8 lg:border-0 lg:pb-0 border-b-[1px] border-b-dark/30 pb-3;
+    }
+}
+
 /*Container*/
 @utility container {
     margin-inline: auto;

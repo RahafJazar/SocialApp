@@ -64,7 +64,10 @@ export class LoginComponent {
             if (resp.success) {
               console.log(resp);
               localStorage.setItem("socialToken", resp.data.token);
-              localStorage.setItem("userData", JSON.stringify(resp.data.user))
+              localStorage.setItem("userData", JSON.stringify(resp.data.user));
+
+              //navigate to feed
+              this.router.navigate(['/feed']);
             }
 
           }

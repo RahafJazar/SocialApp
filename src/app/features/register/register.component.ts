@@ -19,6 +19,8 @@ export class RegisterComponent {
   errorMsg: string = '';
   loading: boolean = false;
   registerSub$: Subscription = new Subscription();
+  showPassword: boolean = false;
+  showRepassword: boolean = false;
   registerForm: FormGroup = this.fb.nonNullable.group({
     name: ['', [
       Validators.required,
@@ -133,5 +135,28 @@ export class RegisterComponent {
     }
 
 
+  }
+
+
+  //show or hide password
+  togglePassword(elem: HTMLInputElement) {
+    this.showPassword = !this.showPassword;
+
+    if (this.showPassword) {
+      elem.type = 'text';
+    }
+    else {
+      elem.type = 'password'
+    }
+  }
+  toggleRePassword(elem: HTMLInputElement) {
+    this.showRepassword = !this.showRepassword;
+
+    if (this.showRepassword) {
+      elem.type = 'text';
+    }
+    else {
+      elem.type = 'password'
+    }
   }
 }

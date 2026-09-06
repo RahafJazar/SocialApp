@@ -204,10 +204,19 @@
                                         <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
                                     </svg>
                                 </span>
-                                <input
+                                <input #passInput
                                     [class]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'border-rose-500' : 'border-slate-200'"
-                                    class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white  focus:ring-0  "
+                                    class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white  focus:ring-0    "
                                     type="password" placeholder="Password" name="password" formControlName="password" />
+
+                                <i [class]="{ 
+                                    'fa-regular' :true,
+                                    'fa-eye' : showPassword,
+                                    'fa-eye-slash' :!showPassword,
+                                    
+                                    }" class="absolute inset-e-4 top-[50%] -translate-y-1/2 cursor-pointer"
+                                    (click)="togglePassword(passInput)" (mousedown)="$event.preventDefault()"
+                                    style="color: #75747bff;"> </i>
                             </div>
                             <!---Error Alert-->
                             @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
@@ -237,11 +246,19 @@
                                         <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
                                     </svg>
                                 </span>
-                                <input
+                                <input #repassInp
                                     [class]="registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched ? 'border-rose-500' : 'border-slate-200'"
                                     class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white  focus:ring-0"
-                                    type="password" placeholder="Confirm password" name="rePassword"
+                                    type="" placeholder="Confirm password" name="rePassword"
                                     formControlName="rePassword" />
+                                <i [class]="{ 
+                                    'fa-regular' :true,
+                                    'fa-eye' : showRepassword,
+                                    'fa-eye-slash' :!showRepassword,
+                                    
+                                    }" class="absolute inset-e-4 top-[50%] -translate-y-1/2 cursor-pointer"
+                                    (click)="toggleRePassword(repassInp)" (mousedown)="$event.preventDefault()"
+                                    style="color: #75747bff;"> </i>
                             </div>
                             <!---Error Alert-->
                             @if (registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched) {
