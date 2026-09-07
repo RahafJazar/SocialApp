@@ -1,5 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommentsService } from './services/comments.service';
+import { comment } from './models/comments-data.interface';
 
 @Component({
   selector: 'app-post-comments',
@@ -10,6 +11,9 @@ import { CommentsService } from './services/comments.service';
 export class PostCommentsComponent implements OnInit {
 
   private readonly commentsService = inject(CommentsService);
+  commentsList: comment[] = [];
+
+
   @Input({ required: true }) postId: string = '';
   ngOnInit(): void {
     throw new Error('Method not implemented.');
@@ -18,8 +22,10 @@ export class PostCommentsComponent implements OnInit {
 
   getPostComments(postId: string): void {
     this.commentsService.getPostComments(postId).subscribe({
-      next: () => {
+      next: (resp) => {
+        if (resp.success) {
 
+        }
       }
     })
   }
