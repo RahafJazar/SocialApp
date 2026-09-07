@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { PostsService } from '../../../../core/services/posts.service';
 import { BasePost, Data, Post, PostsDataResponse, User } from '../../../../core/models/posts-data.interface';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Form, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { PostCommentsComponent } from './components/post-comments/post-comments.component';
 
 @Component({
   selector: 'app-feed-content',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, PostCommentsComponent],
   templateUrl: './feed-content.component.html',
   styleUrl: './feed-content.component.css',
 })
@@ -17,8 +18,8 @@ export class FeedContentComponent implements OnInit {
   postImgUrl: string | ArrayBuffer | null | undefined;
 
   //2 inputs only -> use FormControl instead of FormGroup
-  contentControl = new FormControl('', []);
-  privacyControl = new FormControl('public', null);
+  contentControl: FormControl = new FormControl('', []);
+  privacyControl: FormControl = new FormControl('public', null);
 
 
 
@@ -74,16 +75,59 @@ export class FeedContentComponent implements OnInit {
     this.postImgUrl = '';
   }
 
-  submitForm(submitEvent: SubmitEvent): void {
+  submitForm(submitEvent: SubmitEvent, form: HTMLFormElement): void {
 
     //prevent default behavior of submit in form (reload)
     submitEvent.preventDefault();
-    //create form data 
+    //create form data (contains form data)
     const formData: FormData = new FormData();
     // call api 
     if (this.contentControl) {
       formData.append('body', this.contentControl.value);
     }
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+    if (this.privacyControl) {
+      formData.append('privacy', this.privacyControl.value);
+    }
 
+    for (const pair of formData.entries()) {
+      console.log(pair[0], ':', pair[1])
+    }
+
+    //call api 
+    this.postsService.createPost(formData).subscribe({
+      next: (resp) => {
+        if (resp.success) {
+          console.log(resp);
+          this.resetFormData(form);
+          this.getAllPosts();
+        }
+
+      },
+      error: () => {
+
+      }
+    })
+  }
+
+  resetFormData(form: HTMLFormElement): void {
+    this.postImgUrl = '';
+    form.reset();
+  }
+
+
+  //deletePost 
+  deletePostItem(postId: string): void {
+    this.postsService.deletePost(postId).subscribe(
+      {
+        next: (resp) => {
+          if (resp.success) {
+            this.getAllPosts();
+          }
+        }
+      }
+    )
   }
 }

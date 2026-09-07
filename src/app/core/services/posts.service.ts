@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment as prodEnvironment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { PostsDataResponse } from '../models/posts-data.interface';
+import { PostMutationDataResponce } from '../models/post-mutation-data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,8 @@ export class PostsService {
       headers: this.myHeaders
     })
   }
-  createPost(request: any): Observable<any> {
-    return this.httpClient.post<any>(`${prodEnvironment.base_url}/posts`, request, {
+  createPost(request: FormData): Observable<PostMutationDataResponce> {
+    return this.httpClient.post<PostMutationDataResponce>(`${prodEnvironment.base_url}/posts`, request, {
       headers: this.myHeaders,
 
     })

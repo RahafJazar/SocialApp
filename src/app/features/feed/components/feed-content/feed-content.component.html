@@ -1,6 +1,6 @@
 <section class="space-y-4">
 
-    <form (submit)="submitForm($event)">
+    <form #form (submit)="submitForm($event ,form)">
         <div class="w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4 font-sans flex flex-col">
             <div class="flex items-center gap-3 mb-3">
                 <img [src]="" alt="Ahmed Reda"
@@ -89,9 +89,9 @@
 
                             @if (post.user._id === userId) {
                             <select class="border-none bg-transparent cursor-pointer ring-0 py-0 px-2 text-xs">
-                                <option value="public">public</option>
-                                <option value="following">followers</option>
-                                <option value="only_me">only me</option>
+                                <option value="public" [selected]="post.privacy === 'public'">public</option>
+                                <option value="following" [selected]="post.privacy === 'following'">followers</option>
+                                <option value="only_me" [selected]="post.privacy === 'only_me'">only me</option>
                             </select>
                             }
                             @else {
@@ -130,7 +130,7 @@
                                 class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
                                 Edit post
                             </button>
-                            <button
+                            <button (click)="deletePostItem(post._id )"
                                 class="inline-flex text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
                                 Delete post
                             </button>
@@ -195,6 +195,10 @@
         </div>
 
         <hr class="border-t border-slate-200 mt-1 mb-4" />
+
+
+        <!--- Comments -->
+        <app-post-comments [postId]="post._id" />
 
     </div>
     }
