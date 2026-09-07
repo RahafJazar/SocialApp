@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { PostsService } from '../../../../core/services/posts.service';
 import { BasePost, Data, Post, PostsDataResponse, User } from '../../../../core/models/posts-data.interface';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-feed-content',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './feed-content.component.html',
   styleUrl: './feed-content.component.css',
 })
@@ -14,6 +15,13 @@ export class FeedContentComponent implements OnInit {
   selectedFile!: File;
   posts: BasePost[] = [];
   postImgUrl: string | ArrayBuffer | null | undefined;
+
+  //2 inputs only -> use FormControl instead of FormGroup
+  contentControl = new FormControl('', []);
+  privacyControl = new FormControl('public', null);
+
+
+
   ngOnInit(): void {
     this.getUserID();
     this.getAllPosts();
@@ -64,5 +72,18 @@ export class FeedContentComponent implements OnInit {
 
   removeFile(): void {
     this.postImgUrl = '';
+  }
+
+  submitForm(submitEvent: SubmitEvent): void {
+
+    //prevent default behavior of submit in form (reload)
+    submitEvent.preventDefault();
+    //create form data 
+    const formData: FormData = new FormData();
+    // call api 
+    if (this.contentControl) {
+      formData.append('body', this.contentControl.value);
+    }
+
   }
 }
