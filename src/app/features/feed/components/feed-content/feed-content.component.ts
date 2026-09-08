@@ -18,8 +18,7 @@ export class FeedContentComponent implements OnInit {
   selectedFile!: File;
   posts: BasePost[] = [];
   postImgUrl: string | ArrayBuffer | null | undefined;
-  userName: string = '';
-  userPhoto: string = '';
+  userData: UserInfo = {} as UserInfo;
   //2 inputs only -> use FormControl instead of FormGroup
   contentControl: FormControl = new FormControl('', []);
   privacyControl: FormControl = new FormControl('public', null);
@@ -27,23 +26,11 @@ export class FeedContentComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getUserID();
-    this.getUserName();
-    this.getUserPhoto();
+    this.getUserData();
     this.getAllPosts();
   }
 
-  getUserPhoto(): void {
-    if (localStorage.getItem('userData')) {
-      this.userPhoto = JSON.parse(localStorage.getItem('userData')!)?.photo;
-    }
-  }
 
-  getUserName(): void {
-    if (localStorage.getItem('userData')) {
-      this.userName = JSON.parse(localStorage.getItem('userData')!)?.name;
-    }
-  }
   getAllPosts(): void {
     this.postsService.geAllPosts().subscribe({
       next: (resp: PostsDataResponse) => {
@@ -58,8 +45,9 @@ export class FeedContentComponent implements OnInit {
     })
   }
 
-  getUserID() {
+  getUserData() {
     if (localStorage.getItem('userData')) {
+      this.userData = JSON.parse(localStorage.getItem('userData')!);
       this.userId = JSON.parse(localStorage.getItem('userData')!)?._id;
     }
   }
