@@ -5,31 +5,33 @@
     </div>
 
     <!-- comment details  -->
+    @for (comment of commentList; track comment._id) {
+
     <div class="flex gap-2 mb-4 group">
-        <img src="https://i.pravatar.cc/150?img=11" alt="Ahmed Reda"
+        <img [src]="comment.commentCreator.photo" [alt]="comment.commentCreator.name"
             class="w-8 h-8 rounded-full object-cover shrink-0 mt-1 bg-slate-100 border border-slate-50" />
 
         <div class="flex-1 flex flex-col items-start min-w-0">
             <div class="bg-slate-100 rounded-2xl rounded-tl-none px-3.5 py-2.5 max-w-full">
                 <div class="flex items-center gap-1.5 mb-0.5">
-                    <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer">Ahmed
-                        Reda</span>
+                    <span
+                        class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer">{{comment.commentCreator.name}}</span>
                 </div>
 
                 <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
-                    <span>@reda</span>
+                    <span>{{comment.commentCreator.username}}</span>
                     <span>&middot;</span>
-                    <span>6s</span>
+                    <span>{{comment.createdAt}}</span>
                 </div>
 
                 <p class="text-[14px] text-slate-800 wrap-break-word">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, amet!
+                    {{comment.content}}
                 </p>
             </div>
 
             <div class="flex items-center gap-3 mt-1 ml-2 text-[12px] text-slate-500 font-semibold">
-                <span class="cursor-pointer hover:underline">6s</span>
-                <button class="cursor-pointer hover:underline">Like (0)</button>
+                <span class="cursor-pointer hover:underline">{{comment.createdAt}}</span>
+                <button class="cursor-pointer hover:underline">Like ({{comment.likes.length}})</button>
                 <button class="cursor-pointer hover:underline">Reply</button>
                 <button
                     class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -38,6 +40,7 @@
             </div>
         </div>
     </div>
+    }
 
     <!-- Create Comments  -->
     <div class="flex gap-2 mt-4">

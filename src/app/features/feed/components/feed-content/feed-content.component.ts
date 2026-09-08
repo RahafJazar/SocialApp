@@ -1,8 +1,10 @@
+import { UserInfo } from './../../../../core/models/user-data.interface';
 import { Component, inject, OnInit } from '@angular/core';
 import { PostsService } from '../../../../core/services/posts.service';
 import { BasePost, Data, Post, PostsDataResponse, User } from '../../../../core/models/posts-data.interface';
 import { Form, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PostCommentsComponent } from './components/post-comments/post-comments.component';
+
 
 @Component({
   selector: 'app-feed-content',
@@ -16,7 +18,8 @@ export class FeedContentComponent implements OnInit {
   selectedFile!: File;
   posts: BasePost[] = [];
   postImgUrl: string | ArrayBuffer | null | undefined;
-
+  userName: string = '';
+  userPhoto: string = '';
   //2 inputs only -> use FormControl instead of FormGroup
   contentControl: FormControl = new FormControl('', []);
   privacyControl: FormControl = new FormControl('public', null);
@@ -25,10 +28,22 @@ export class FeedContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserID();
+    this.getUserName();
+    this.getUserPhoto();
     this.getAllPosts();
   }
 
+  getUserPhoto(): void {
+    if (localStorage.getItem('userData')) {
+      this.userPhoto = JSON.parse(localStorage.getItem('userData')!)?.photo;
+    }
+  }
 
+  getUserName(): void {
+    if (localStorage.getItem('userData')) {
+      this.userName = JSON.parse(localStorage.getItem('userData')!)?.name;
+    }
+  }
   getAllPosts(): void {
     this.postsService.geAllPosts().subscribe({
       next: (resp: PostsDataResponse) => {

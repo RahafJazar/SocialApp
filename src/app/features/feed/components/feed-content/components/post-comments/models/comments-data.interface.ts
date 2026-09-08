@@ -12,6 +12,7 @@ export interface CommentsData {
 
 export interface comment {
     _id: string;
+    content: string | null;
     commentCreator: CommentCreator;
     post: string;
     parentComment: string | null;

@@ -11,12 +11,12 @@ import { comment } from './models/comments-data.interface';
 export class PostCommentsComponent implements OnInit {
 
   private readonly commentsService = inject(CommentsService);
-  commentsList: comment[] = [];
+  commentList: comment[] = [];
 
 
   @Input({ required: true }) postId: string = '';
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.getPostComments(this.postId);
   }
 
 
@@ -24,7 +24,8 @@ export class PostCommentsComponent implements OnInit {
     this.commentsService.getPostComments(postId).subscribe({
       next: (resp) => {
         if (resp.success) {
-
+          console.log("comments are: ", resp.data.comments)
+          this.commentList = resp.data.comments;
         }
       }
     })
