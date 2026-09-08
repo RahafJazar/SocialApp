@@ -11,6 +11,7 @@ import { NotificationsComponent } from './features/notifications/notifications.c
 import { ChangePasswordComponent } from './features/change-password/change-password.component';
 import { NotFoundComponent } from './features/not-found/not-found.component';
 import { authGuard } from './core/auth/guards/auth-guard';
+import { DetailsComponent } from './features/details/details.component';
 
 export const routes: Routes = [
     {
@@ -37,7 +38,9 @@ export const routes: Routes = [
             { path: 'feed', component: FeedComponent },
             { path: 'profile', component: ProfileComponent },
             { path: 'notifications', component: NotificationsComponent },
-            { path: 'changePassword', component: ChangePasswordComponent }
+            { path: 'changePassword', component: ChangePasswordComponent },
+            { path: 'details/:id', component: DetailsComponent },
+
         ]
     },
     {

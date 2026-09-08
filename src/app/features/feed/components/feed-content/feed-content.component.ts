@@ -4,11 +4,12 @@ import { PostsService } from '../../../../core/services/posts.service';
 import { BasePost, Data, Post, PostsDataResponse, User } from '../../../../core/models/posts-data.interface';
 import { Form, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PostCommentsComponent } from './components/post-comments/post-comments.component';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-feed-content',
-  imports: [ReactiveFormsModule, PostCommentsComponent],
+  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink],
   templateUrl: './feed-content.component.html',
   styleUrl: './feed-content.component.css',
 })

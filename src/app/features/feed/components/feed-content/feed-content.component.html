@@ -167,7 +167,8 @@
             <div class="flex items-center gap-3">
                 <span class="cursor-pointer hover:underline">{{post.sharesCount}} shares</span>
                 <span class="cursor-pointer hover:underline">{{post.commentsCount}} comments</span>
-                <button class="font-semibold cursor-pointer text-blue-600 hover:underline">
+                <button [routerLink]="['/details/',post._id]"
+                    class="font-semibold cursor-pointer text-blue-600 hover:underline">
                     View details
                 </button>
             </div>
