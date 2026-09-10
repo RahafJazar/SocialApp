@@ -4,6 +4,7 @@ import { environment as prodEnvironment } from '../../../environments/environmen
 import { Observable } from 'rxjs';
 import { PostsDataResponse } from '../models/posts-data.interface';
 import { PostMutationDataResponce } from '../models/post-mutation-data.interface';
+import { PostDetailsDataResponce } from '../../features/details/models/post-details-data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -25,8 +26,8 @@ export class PostsService {
 
     })
   }
-  getsinglePost(postID: string | number): Observable<any> {
-    return this.httpClient.get<any>(`${prodEnvironment.base_url}/posts/${postID}`, {
+  getsinglePost(postID: string | number): Observable<PostDetailsDataResponce> {
+    return this.httpClient.get<PostDetailsDataResponce>(`${prodEnvironment.base_url}/posts/${postID}`, {
       headers: this.myHeaders,
 
     })
