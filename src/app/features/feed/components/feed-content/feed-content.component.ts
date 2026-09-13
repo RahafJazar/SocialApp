@@ -40,9 +40,7 @@ export class FeedContentComponent implements OnInit {
           console.log(this.posts)
         }
       },
-      error: () => {
-        console.log("No Posts Yet");
-      }
+
     })
   }
 
@@ -110,9 +108,7 @@ export class FeedContentComponent implements OnInit {
         }
 
       },
-      error: () => {
 
-      }
     })
   }
 

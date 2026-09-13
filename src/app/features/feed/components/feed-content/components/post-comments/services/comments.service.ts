@@ -9,20 +9,14 @@ import { CommentsDataResponse } from '../models/comments-data.interface';
 })
 export class CommentsService {
   private httpClient = inject(HttpClient);
-  myHeaders: {} = {
-    AUTHORIZATION: `Bearer ` + localStorage.getItem('socialToken')
-  }
+
 
   getPostComments(postID: string, page: number = 1, limit: number = 10): Observable<CommentsDataResponse> {
-    return this.httpClient.get<CommentsDataResponse>(`${prodEnvironment.base_url}/posts/${postID}/comments?page=${page}&limit=${limit}`, {
-      headers: this.myHeaders
-    });
+    return this.httpClient.get<CommentsDataResponse>(`${prodEnvironment.base_url}/posts/${postID}/comments?page=${page}&limit=${limit}`);
 
   }
-  createComment(postID: string): Observable<any> {
-    return this.httpClient.get<any>(`${prodEnvironment.base_url}/posts/${postID}/comments`, {
-      headers: this.myHeaders
-    });
+  createComment(postID: string, data: Object): Observable<any> {
+    return this.httpClient.get<any>(`${prodEnvironment.base_url}/posts/${postID}/comments`, data);
 
   }
 

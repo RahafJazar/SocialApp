@@ -11,38 +11,22 @@ import { PostDetailsDataResponce } from '../../features/details/models/post-deta
 })
 export class PostsService {
   private httpClient = inject(HttpClient);
-  myHeaders: {} = {
-    AUTHORIZATION: `Bearer ` + localStorage.getItem('socialToken')
-  }
+
 
   geAllPosts(): Observable<PostsDataResponse> {
-    return this.httpClient.get<any>(`${prodEnvironment.base_url}/posts`, {
-      headers: this.myHeaders
-    })
+    return this.httpClient.get<any>(`${prodEnvironment.base_url}/posts`)
   }
   createPost(request: FormData): Observable<PostMutationDataResponce> {
-    return this.httpClient.post<PostMutationDataResponce>(`${prodEnvironment.base_url}/posts`, request, {
-      headers: this.myHeaders,
-
-    })
+    return this.httpClient.post<PostMutationDataResponce>(`${prodEnvironment.base_url}/posts`, request)
   }
   getsinglePost(postID: string | number): Observable<PostDetailsDataResponce> {
-    return this.httpClient.get<PostDetailsDataResponce>(`${prodEnvironment.base_url}/posts/${postID}`, {
-      headers: this.myHeaders,
-
-    })
+    return this.httpClient.get<PostDetailsDataResponce>(`${prodEnvironment.base_url}/posts/${postID}`)
   }
-  updatePost(postID: string | number): Observable<any> {
-    return this.httpClient.put<any>(`${prodEnvironment.base_url}/posts/${postID}`, {
-      headers: this.myHeaders,
-
-    })
+  updatePost(postID: string | number, data: object): Observable<any> {
+    return this.httpClient.put<any>(`${prodEnvironment.base_url}/posts/${postID}`, data)
   }
   deletePost(postID: string | number): Observable<any> {
-    return this.httpClient.delete<any>(`${prodEnvironment.base_url}/posts/${postID}`, {
-      headers: this.myHeaders,
-
-    })
+    return this.httpClient.delete<any>(`${prodEnvironment.base_url}/posts/${postID}`)
   }
 
 }
