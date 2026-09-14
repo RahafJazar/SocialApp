@@ -1,15 +1,5 @@
 <section class="min-h-screen bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
-    <div class="relative w-full max-w-md">
-        <svg class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-gray-400"
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-            aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="m21 21-4.35-4.35m2.1-5.4a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
-        </svg>
 
-        <input type="search" placeholder="Search..." aria-label="Search"
-            class="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-4 text-sm text-gray-900 shadow-sm outline-none transition placeholder:text-gray-400 hover:border-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10" />
-    </div>
     <div class="mx-auto max-w-7xl">
         <!-- Header -->
         <div class="mb-10 text-center">
@@ -25,10 +15,24 @@
                 Discover our latest fashion products and exclusive offers.
             </p>
         </div>
+        <div class=" w-full max-w-md my-3 flex gap-4 items-center ">
+            <p class="md:text-2xl/30 font-semibold  ">Search </p>
+            <div class="relative">
 
+                <svg class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m21 21-4.35-4.35m2.1-5.4a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
+                </svg>
+
+                <input type="search" placeholder="Search..." aria-label="Search" [(ngModel)]="searchValue"
+                    class="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-4 text-sm text-gray-900 shadow-sm outline-none transition placeholder:text-gray-400 hover:border-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10" />
+            </div>
+        </div>
         <!-- Products grid -->
         <div class="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            @for (product of productsList; track product.id) {
+            @for (product of productsList |search:searchValue; track product.id) {
             <article
                 class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <!-- Product image -->

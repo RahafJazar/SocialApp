@@ -1,26 +1,20 @@
 import { AsyncPipe, CurrencyPipe, DatePipe, JsonPipe, LowerCasePipe, SlicePipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { OnSalePipe } from '../../shared/pipes/on-sale-pipe';
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  imageCover: string;
-  price: number;
-  quantity: number;
-  images: string[];
-  onSale: boolean;
-}
+import { Product } from '../../core/models/product.interface';
+import { SearchPipe } from '../../shared/pipes/search-pipe';
+import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-profile',
-  imports: [UpperCasePipe, LowerCasePipe, TitleCasePipe, CurrencyPipe, DatePipe,
-    SlicePipe, JsonPipe, AsyncPipe, OnSalePipe
+  imports: [FormsModule, UpperCasePipe, LowerCasePipe, TitleCasePipe, CurrencyPipe, DatePipe,
+    SlicePipe, JsonPipe, AsyncPipe, OnSalePipe, SearchPipe
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent {
-
+  searchValue: string = '';
   myDate = new Date();
   productsList: Product[] = [
 
