@@ -30,6 +30,8 @@
     "@angular/router": "^20.2.0",
     "@fortawesome/angular-fontawesome": "^5.1.0",
     "@fortawesome/fontawesome-free": "^7.3.1",
+    "@ngx-translate/core": "^18.0.0",
+    "@ngx-translate/http-loader": "^18.0.0",
     "@tailwindcss/postcss": "^4.3.3",
     "flowbite": "^4.0.2",
     "ngx-spinner": "^22.0.1",

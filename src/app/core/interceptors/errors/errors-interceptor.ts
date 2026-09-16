@@ -17,7 +17,7 @@ export const errorsInterceptor: HttpInterceptorFn = (req, next) => {
       progressBar: true
     })
     return throwError(() => err)
-  }));
+  }))
 
   //pipe->rxjs operators
 };
