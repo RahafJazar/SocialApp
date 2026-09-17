@@ -1,0 +1,33 @@
+{
+    "BRAND": {
+        "NAME": "Togetherly",
+        "TAGLINE": "Explore the things",
+        "TAGLINE_HIGHLIGHT": "you love."
+    },
+    "AUTH": {
+        "TABS": {
+            "LOGIN": "Login",
+            "REGISTER": "Register"
+        },
+        "LOGIN": {
+            "TITLE": "Log In",
+            "SUBTITLE": "Log in and continue your social journey.",
+            "EMAIL_PLACEHOLDER": "Email address",
+            "PASSWORD_PLACEHOLDER": "Password",
+            "SUBMIT": "Log In",
+            "SUBMITTING": "Logging in...",
+            "FORGOT_PASSWORD": "Forgot Password?",
+            "ERROR_FALLBACK": "Unable to log in. Please try again."
+        }
+    },
+    "VALIDATION": {
+        "EMAIL": {
+            "REQUIRED": "Email is required.",
+            "INVALID": "Please enter a valid email address."
+        },
+        "PASSWORD": {
+            "REQUIRED": "Password is required.",
+            "PATTERN": "Password does not meet the required format."
+        }
+    }
+}

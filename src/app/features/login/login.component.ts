@@ -5,10 +5,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscribable, Subscription } from 'rxjs';
 import { UserDataResponse } from '../../core/models/user-data.interface';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, RouterLinkActive, ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [RouterLink, RouterLinkActive, ɵInternalFormsSharedModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })

@@ -11,7 +11,7 @@ export class MyTranslateService {
       document.documentElement.setAttribute('dir', 'ltr');
       document.documentElement.setAttribute('lang', 'en');
     }
-    else if (localStorage.getItem('language') === 'er') {
+    else if (localStorage.getItem('language') === 'ar') {
       //ele language ==='er' -> dir =rtl && lang attribute ='ar
       document.documentElement.setAttribute('dir', 'rtl');
       document.documentElement.setAttribute('lang', 'ar');

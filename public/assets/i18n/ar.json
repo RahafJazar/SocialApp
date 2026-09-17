@@ -1,0 +1,33 @@
+{
+    "BRAND": {
+        "NAME": "Togetherly",
+        "TAGLINE": "استكشف الأشياء التي",
+        "TAGLINE_HIGHLIGHT": "تحبها."
+    },
+    "AUTH": {
+        "TABS": {
+            "LOGIN": "تسجيل الدخول",
+            "REGISTER": "إنشاء حساب"
+        },
+        "LOGIN": {
+            "TITLE": "تسجيل الدخول",
+            "SUBTITLE": "سجّل دخولك وتابع رحلتك الاجتماعية.",
+            "EMAIL_PLACEHOLDER": "البريد الإلكتروني",
+            "PASSWORD_PLACEHOLDER": "كلمة المرور",
+            "SUBMIT": "تسجيل الدخول",
+            "SUBMITTING": "جارٍ تسجيل الدخول...",
+            "FORGOT_PASSWORD": "هل نسيت كلمة المرور؟",
+            "ERROR_FALLBACK": "تعذّر تسجيل الدخول. يرجى المحاولة مرة أخرى."
+        }
+    },
+    "VALIDATION": {
+        "EMAIL": {
+            "REQUIRED": "البريد الإلكتروني مطلوب.",
+            "INVALID": "يرجى إدخال بريد إلكتروني صالح."
+        },
+        "PASSWORD": {
+            "REQUIRED": "كلمة المرور مطلوبة.",
+            "PATTERN": "كلمة المرور لا تطابق الشروط المطلوبة."
+        }
+    }
+}
