@@ -10,7 +10,7 @@ import {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgxSpinnerModule, NgxSpinnerComponent],
+  imports: [RouterOutlet, NgxSpinnerModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

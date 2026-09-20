@@ -10,7 +10,7 @@ export const headersInterceptor: HttpInterceptorFn = (req, next) => {
       req = req.clone({
         setHeaders: {
           'AUTHORIZATION': `Bearer ${localStorage.getItem('socialToken')}`,
-          'lang': localStorage.getItem('lang')!
+          // 'lang': localStorage.getItem('lang')!
         }
       }) //copy the object with new configuration
 

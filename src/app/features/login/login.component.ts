@@ -6,10 +6,11 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscribable, Subscription } from 'rxjs';
 import { UserDataResponse } from '../../core/models/user-data.interface';
 import { TranslatePipe } from '@ngx-translate/core';
+import { BtnLanguageComponent } from '../../shared/ui/btn-language/btn-language.component';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, RouterLinkActive, ɵInternalFormsSharedModule, ReactiveFormsModule, TranslatePipe],
+  imports: [RouterLink, RouterLinkActive, ɵInternalFormsSharedModule, ReactiveFormsModule, TranslatePipe, BtnLanguageComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -74,9 +75,10 @@ export class LoginComponent {
           }
           ,
           error: (err: HttpErrorResponse) => {
-            console.log(err.error.message);
-            //show errors 
-            this.errorMsg = err.error.message;
+            console.log('FULL ERROR:', err);
+            console.log('ERROR BODY:', err.error);
+
+            this.errorMsg = err.error?.message ?? 'Something went wrong';
             this.loading = false;
           },
           complete: () => {

@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MyTranslateService {
+
+  private readonly translateService = inject(TranslateService);
   changeDirection(): void {
     //if language =='en' -> dir=ltr & lang attribute= 'en'
     if (localStorage.getItem('language') === 'en') {
@@ -17,5 +20,11 @@ export class MyTranslateService {
       document.documentElement.setAttribute('lang', 'ar');
 
     }
+  }
+
+  changeLang(savedLang: string): void {
+    localStorage.setItem("language", savedLang);
+    this.translateService.use(savedLang);
+    this.changeDirection();
   }
 }
