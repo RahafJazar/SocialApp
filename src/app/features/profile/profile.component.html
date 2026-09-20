@@ -1,8 +1,152 @@
-<section class="min-h-screen bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
+<section class="min-h-screen bg-second-color px-4 py-6 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-5xl space-y-4">
 
-    <div class="mx-auto max-w-7xl">
-        <h1 class="capitalize"><span class="font-bold">Username</span>{{username}}</h1>
-        <button class="text-white bg-amber-400 py-1 px-3 rounded-xl cursor-pointer"
-            (click)="changeUserName()">change</button>
+        <!-- Header -->
+        <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="h-36 bg-gradient-to-br from-main-color via-[#1a56db] to-[#60a5fa] sm:h-44"></div>
+
+            <div class="relative px-4 pb-5 sm:px-6">
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                    <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-end">
+                        <div class="relative -mt-14 sm:-mt-16">
+                            <img [src]="userData.photo" [alt]="userData.name"
+                                class="size-28 rounded-full border-4 border-white object-cover bg-slate-200 shadow-md sm:size-32" />
+                            <label
+                                class="absolute bottom-1 right-1 flex size-9 cursor-pointer items-center justify-center rounded-full bg-main-color text-white shadow hover:bg-[#001f6b]"
+                                title="Upload profile photo">
+                                <i class="fa-solid fa-camera text-sm"></i>
+                                <input type="file" accept="image/*" class="hidden" />
+                            </label>
+                        </div>
+
+                        <div class="pb-1">
+                            <h1 class="text-2xl font-extrabold text-slate-900 sm:text-3xl"></h1>
+                            <p class="text-sm font-semibold text-slate-500"></p>
+                            <p class="mt-1 text-sm text-slate-500"></p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 sm:pb-1">
+                        <button type="button"
+                            class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50">
+                            Change Password
+                        </button>
+                        <button type="button"
+                            class="rounded-xl bg-main-color px-4 py-2 text-sm font-bold text-white transition hover:bg-[#001f6b]">
+                            Follow
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="mt-5 flex flex-wrap gap-6 border-t border-slate-100 pt-4">
+                    <div>
+                        <p class="text-lg font-extrabold text-slate-900">{{userData.followersCount}}</p>
+                        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Followers</p>
+                    </div>
+                    <div>
+                        <p class="text-lg font-extrabold text-slate-900">{{userData.followingCount}}</p>
+                        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Following</p>
+                    </div>
+                    <div>
+                        <p class="text-lg font-extrabold text-slate-900">{{userData.bookmarksCount}}</p>
+                        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Bookmarks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="rounded-2xl border border-slate-200 bg-white px-2 shadow-sm sm:px-4">
+            <nav class="flex gap-1 overflow-x-auto" aria-label="Profile sections">
+                <button type="button" class="relative whitespace-nowrap px-4 py-3 text-sm font-bold text-main-color">
+                    Posts
+                    <span class="absolute inset-x-2 bottom-0 h-0.5 rounded-full bg-main-color"></span>
+                </button>
+                <button type="button"
+                    class="relative whitespace-nowrap px-4 py-3 text-sm font-bold text-slate-500 hover:text-slate-800">
+                    Bookmarks
+                </button>
+            </nav>
+        </div>
+
+        <!-- Content -->
+        <div class="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
+
+            <!-- Sidebar -->
+            <aside class="space-y-4">
+                <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <h2 class="mb-3 text-base font-extrabold text-slate-900">About</h2>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-venus-mars mt-0.5 text-main-color"></i>
+                            <span class="capitalize flex flex-col ">
+                                <span>Gender</span>
+                                <span>{{userData.gender}}</span>
+                            </span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-cake-candles mt-0.5 text-main-color"></i>
+                            <span class=" flex flex-col">
+                                <span>Birthday</span>
+                                <span>{{userData.dateOfBirth | date:'longDate'}}</span>
+                            </span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-calendar mt-0.5 text-main-color"></i>
+                            <span class="flex flex-col">
+                                <span>Joined</span>
+                                <span>{{userData.createdAt | date:'longDate'}}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <h2 class="mb-3 text-base font-extrabold text-slate-900">Suggested</h2>
+                    <div class="space-y-3">
+                        @for (suggestion of suggestions; track $index) {
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex min-w-0 items-center gap-2">
+                                <img [src]="suggestion.photo" [alt]="suggestion.name"
+                                    class="size-9 rounded-full object-cover bg-slate-200" />
+                                <div class="min-w-0">
+                                    <p class="truncate text-sm font-bold text-slate-900">{{suggestion.name}}</p>
+                                    <p class="truncate text-xs text-slate-500">{{suggestion.username}}</p>
+                                </div>
+                            </div>
+                            <button type="button"
+                                class="shrink-0 rounded-full bg-[#e7f3ff] px-3 py-1 text-xs font-bold text-[#1877f2] hover:bg-[#d8ebff]">
+                                Follow
+                            </button>
+                        </div>
+
+                        }
+
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Posts / Bookmarks area -->
+            <div class="space-y-4">
+                <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div class="mb-3 flex items-center gap-3">
+                        <img src="" alt=""
+                            class="size-10 rounded-full border border-slate-100 object-cover bg-slate-200" />
+                        <div>
+                            <p class="text-[15px] font-bold text-slate-900"></p>
+                            <p class="text-xs text-slate-500"></p>
+                        </div>
+                    </div>
+                    <p class="text-[15px] leading-relaxed text-slate-800"></p>
+                    <img src="" alt="" class="mt-3 max-h-80 w-full rounded-xl object-cover bg-slate-100" />
+                    <div class="mt-3 flex gap-4 border-t border-slate-100 pt-3 text-sm font-semibold text-slate-500">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </article>
+            </div>
+        </div>
+
     </div>
 </section>

@@ -3,7 +3,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 export const headersInterceptor: HttpInterceptorFn = (req, next) => {
 
   console.log(req) //{url,statu}
-  if (req.url.includes('posts') || req.url.includes('cooments')) {
+  if (req.url.includes('posts') || req.url.includes('comments')) {
     const token = localStorage.getItem('socialToken');
     if (token) {
       //if there's a token
