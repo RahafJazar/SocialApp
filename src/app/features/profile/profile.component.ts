@@ -3,6 +3,7 @@ import { ProfileService } from '../../core/services/profile.service';
 import { UserDataResponse, UserInfo } from '../../core/models/user-data.interface';
 import { DatePipe } from '@angular/common';
 import { FollowDataResponse, Suggestion } from '../../core/models/follow-data-response.interface';
+import { BasePost } from '../../core/models/posts-data.interface';
 
 type ProfileTab = 'Posts' | 'About' | 'Photos' | 'Friends';
 
@@ -25,8 +26,10 @@ interface MockPost {
 })
 export class ProfileComponent implements OnInit {
     private profileService = inject(ProfileService);
-    suggestions: Suggestion[] = []
+    suggestions: Suggestion[] = [];
+    myPosts: BasePost[] = [];
     userData !: UserInfo;
+    userId !: number;
     ngOnInit(): void {
         this.getMyProfile()
     }
@@ -39,6 +42,8 @@ export class ProfileComponent implements OnInit {
                     console.log(`profile data : \n`, data)
                     this.userData = data.data.user;
                     this.getFollowSuggestions();
+                    this.getUserData();
+                    this.getMyPosts();
                 }
             }
         })
@@ -53,5 +58,19 @@ export class ProfileComponent implements OnInit {
                 }
             }
         })
+    }
+
+    getMyPosts(): void {
+        this.profileService.getMyPosts(this.userId).subscribe({
+            next: (resp) => {
+                this.myPosts = resp.data.posts;
+            }
+        })
+    }
+    getUserData() {
+        if (localStorage.getItem('userData')) {
+            this.userData = JSON.parse(localStorage.getItem('userData')!);
+            this.userId = JSON.parse(localStorage.getItem('userData')!)?._id;
+        }
     }
 }

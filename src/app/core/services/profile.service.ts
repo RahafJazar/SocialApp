@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { UserDataResponse } from '../models/user-data.interface';
 import { FollowDataResponse } from '../models/follow-data-response.interface';
+import { PostsDataResponse } from '../models/posts-data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +19,10 @@ export class ProfileService {
 
   getFollowProfileSuggestions(limit = 10): Observable<FollowDataResponse> {
     return this.httpClient.get<FollowDataResponse>(`${environment.base_url}/users/suggestions?limit=${limit}`);
+  }
+
+  getMyPosts(myId: number): Observable<PostsDataResponse> {
+    return this.httpClient.get<PostsDataResponse>(`${environment.base_url}/users/${myId}/posts`)
+
   }
 }
