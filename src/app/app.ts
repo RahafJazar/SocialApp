@@ -1,12 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NgxSpinnerComponent, NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { MyTranslateService } from './core/services/my-translate.service';
 import {
-  TranslateService,
-  TranslatePipe,
-  TranslateDirective
+  TranslateService
 } from "@ngx-translate/core";
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { MyTranslateService } from './core/services/my-translate.service';
 
 @Component({
   selector: 'app-root',

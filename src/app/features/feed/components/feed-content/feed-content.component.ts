@@ -5,11 +5,13 @@ import { BasePost, Data, Post, PostsDataResponse, User } from '../../../../core/
 import { Form, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PostCommentsComponent } from './components/post-comments/post-comments.component';
 import { RouterLink } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
 
 
 @Component({
   selector: 'app-feed-content',
-  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink],
+  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink, DatePipe, TimeAgoPipe],
   templateUrl: './feed-content.component.html',
   styleUrl: './feed-content.component.css',
 })

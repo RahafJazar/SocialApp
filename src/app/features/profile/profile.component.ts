@@ -1,35 +1,30 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { ProfileService } from '../../core/services/profile.service';
-import { UserDataResponse, UserInfo } from '../../core/models/user-data.interface';
 import { DatePipe } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { FollowDataResponse, Suggestion } from '../../core/models/follow-data-response.interface';
 import { BasePost } from '../../core/models/posts-data.interface';
+import { UserDataResponse, UserInfo } from '../../core/models/user-data.interface';
+import { PostsService } from '../../core/services/posts.service';
+import { ProfileService } from '../../core/services/profile.service';
+import { TimeAgoPipe } from '../../shared/pipes/time-ago-pipe';
+import { PostCommentsComponent } from '../feed/components/feed-content/components/post-comments/post-comments.component';
 
-type ProfileTab = 'Posts' | 'About' | 'Photos' | 'Friends';
-
-interface MockPost {
-    id: number;
-    author: string;
-    avatar: string;
-    time: string;
-    content: string;
-    image?: string;
-    likes: number;
-    comments: number;
-}
 
 @Component({
     selector: 'app-profile',
-    imports: [DatePipe],
+    imports: [DatePipe, TimeAgoPipe, PostCommentsComponent, RouterLink, RouterLinkActive],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
     private profileService = inject(ProfileService);
+    private postsService = inject(PostsService);
     suggestions: Suggestion[] = [];
     myPosts: BasePost[] = [];
-    userData !: UserInfo;
-    userId !: number;
+    userData: UserInfo = {} as UserInfo
+    userId !: string | undefined;
+
     ngOnInit(): void {
         this.getMyProfile()
     }
@@ -42,12 +37,14 @@ export class ProfileComponent implements OnInit {
                     console.log(`profile data : \n`, data)
                     this.userData = data.data.user;
                     this.getFollowSuggestions();
-                    this.getUserData();
+                    this.userData = data.data.user;
+                    this.userId = data.data.user._id;
                     this.getMyPosts();
                 }
             }
         })
     }
+
 
     getFollowSuggestions(): void {
         this.profileService.getFollowProfileSuggestions().subscribe({
@@ -67,10 +64,16 @@ export class ProfileComponent implements OnInit {
             }
         })
     }
-    getUserData() {
-        if (localStorage.getItem('userData')) {
-            this.userData = JSON.parse(localStorage.getItem('userData')!);
-            this.userId = JSON.parse(localStorage.getItem('userData')!)?._id;
-        }
+    //deletePost 
+    deletePostItem(postId: string): void {
+        this.postsService.deletePost(postId).subscribe(
+            {
+                next: (resp) => {
+                    if (resp.success) {
+                        this.getMyPosts();
+                    }
+                }
+            }
+        )
     }
 }

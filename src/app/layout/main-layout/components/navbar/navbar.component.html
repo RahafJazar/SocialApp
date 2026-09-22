@@ -9,14 +9,14 @@
                 class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary"
                 id="user-menu-button" aria-expanded="false" (click)="toggleUserMenu()">
                 <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                <img class="w-8 h-8 rounded-full" [src]="userData.photo" alt="user photo">
             </button>
             <!-- Dropdown menu -->
             <div class="absolute right-0 top-17 z-50  bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
                 [class.hidden]="!showUserMenu" id="user-dropdown">
                 <div class="px-4 py-3 text-sm border-b border-default">
-                    <span class="block text-heading font-medium">Joseph McFall</span>
-                    <span class="block text-body truncate">name@flowbite.com</span>
+                    <span class="block text-heading font-medium">{{userData.name}}</span>
+                    <span class="block text-body truncate">{{userData.email}}</span>
                 </div>
                 <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
                     <li>
