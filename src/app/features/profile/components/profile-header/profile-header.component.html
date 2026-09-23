@@ -1,0 +1,56 @@
+<!-- Header -->
+<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div class="h-36 bg-gradient-to-br from-main-color via-[#1a56db] to-[#60a5fa] sm:h-44"></div>
+
+    <div class="relative px-4 pb-5 sm:px-6">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-end">
+
+                <div class="relative -mt-14 sm:-mt-16">
+                    <img [src]="userData.photo" [alt]="userData.name"
+                        class="size-28 rounded-full border-4 border-white object-cover bg-slate-200 shadow-md sm:size-32" />
+                    <label
+                        class="absolute bottom-1 right-1 flex size-9 cursor-pointer items-center justify-center rounded-full bg-main-color text-white shadow hover:bg-[#001f6b]"
+                        title="Upload profile photo">
+                        <i class="fa-solid fa-camera text-sm"></i>
+                        <input type="file" accept="image/*" class="hidden" />
+                    </label>
+                </div>
+
+
+                <div class="pb-1">
+                    <h1 class="text-2xl font-extrabold text-slate-900 sm:text-3xl">{{userData.name}}</h1>
+                    <p class="text-sm font-semibold text-slate-500">@{{userData.username}}</p>
+                    <p class="mt-1 text-sm text-slate-500">{{userData.email}}</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 sm:pb-1">
+                <button type="button"
+                    class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50">
+                    Change Password
+                </button>
+                <button type="button"
+                    class="rounded-xl bg-main-color px-4 py-2 text-sm font-bold text-white transition hover:bg-[#001f6b]">
+                    Follow
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="mt-5 flex flex-wrap gap-6 border-t border-slate-100 pt-4">
+            <div>
+                <p class="text-lg font-extrabold text-slate-900">{{userData.followersCount}}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Followers</p>
+            </div>
+            <div>
+                <p class="text-lg font-extrabold text-slate-900">{{userData.followingCount}}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Following</p>
+            </div>
+            <div>
+                <p class="text-lg font-extrabold text-slate-900">{{userData.bookmarksCount}}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Bookmarks</p>
+            </div>
+        </div>
+    </div>
+</div>
