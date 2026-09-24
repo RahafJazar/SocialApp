@@ -7,11 +7,13 @@ import { PostsService } from '../../core/services/posts.service';
 import { ProfileService } from '../../core/services/profile.service';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { ProfilePostsComponent } from './components/profile-posts/profile-posts.component';
+import { Bookmark } from '../../core/models/bookmarks-data.interface';
+import { ProfileBookmarksComponent } from "./components/profile-bookmarks/profile-bookmarks.component";
 
 
 @Component({
   selector: 'app-profile',
-  imports: [DatePipe, ProfileHeaderComponent, ProfilePostsComponent],
+  imports: [DatePipe, ProfileHeaderComponent, ProfilePostsComponent, ProfileBookmarksComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
@@ -22,6 +24,10 @@ export class ProfileComponent implements OnInit {
   myPosts: Post[] = [];
   userData: UserInfo = {} as UserInfo
   userId !: string | undefined;
+  activeTab: 'Posts' | 'Bookmarks' = 'Posts';
+  bookmarks: Bookmark[] = [];
+
+
 
   ngOnInit(): void {
     this.getMyProfile()
@@ -37,6 +43,7 @@ export class ProfileComponent implements OnInit {
           this.userId = this.userData._id ?? this.userData.id;
           this.getFollowSuggestions();
           this.getMyPosts();
+          this.getBookmarks();
         }
       }
     })
@@ -61,6 +68,15 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
+
+  getBookmarks(): void {
+    this.profileService.getBookmarks().subscribe({
+      next: (resp) => {
+        this.bookmarks = resp.data.bookmarks;
+      }
+    })
+  }
+
   //deletePost 
   deletePostItem(postId: string): void {
     this.postsService.deletePost(postId).subscribe(
@@ -73,12 +89,5 @@ export class ProfileComponent implements OnInit {
       }
     )
   }
-  getUserData() {
-    const User_data: UserInfo = JSON.parse(localStorage.getItem('userData')!);
-    if (User_data) {
-      this.userData = User_data;
 
-    }
-  }
 }
- 

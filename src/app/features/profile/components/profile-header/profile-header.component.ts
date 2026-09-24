@@ -7,11 +7,9 @@ import { UserInfo } from '../../../../core/models/user-data.interface';
   templateUrl: './profile-header.component.html',
   styleUrl: './profile-header.component.css',
 })
-export class ProfileHeaderComponent implements OnChanges {
+export class ProfileHeaderComponent {
 
   @Input() userData: UserInfo = {};
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.userData = changes;
-  }
+
 }

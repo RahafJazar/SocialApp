@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { UserDataResponse } from '../models/user-data.interface';
 import { FollowDataResponse } from '../models/follow-data-response.interface';
 import { PostsDataResponse } from '../models/posts-data.interface';
+import { BookmarksDataResponse } from '../models/bookmarks-data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,9 @@ export class ProfileService {
 
   getMyPosts(myId: string | undefined): Observable<PostsDataResponse> {
     return this.httpClient.get<PostsDataResponse>(`${environment.base_url}/users/${myId}/posts`)
+  }
 
+  getBookmarks(): Observable<BookmarksDataResponse> {
+    return this.httpClient.get<BookmarksDataResponse>(`${environment.base_url}/users/bookmarks`)
   }
 }
