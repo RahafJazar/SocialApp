@@ -32,6 +32,9 @@ export class SuggestedFriendsComponent implements OnInit {
 
 
   showMoreOrLess(): void {
+    if (this.visibleCounts > this.suggestions.length) {
+      this.visibleCounts -= 3;
+    }
     this.visibleCounts += 3;
   }
 }
