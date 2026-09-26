@@ -1,3 +1,4 @@
+import { NotificationType } from "../enums/notification-type.enum"
 
 export interface NotificationsDataResponse {
     success: boolean
@@ -14,7 +15,7 @@ export interface Notification {
     _id: string
     recipient: Recipient
     actor: Actor
-    type: string
+    type: NotificationType
     entityType: string
     entityId: string
     isRead: boolean
@@ -45,12 +46,28 @@ export interface Entity {
     id: string
     user?: string
     commentsCount?: number
-    topComment: any
+    topComment: TopComment
     sharesCount?: number
     likesCount?: number
-    isShare?: boolean
+    isShare?: boolean,
+    body?: string
+}
+export interface TopComment {
+    _id: string
+    content: string
+    commentCreator: CommentCreator
+    post: string
+    parentComment: any
+    likes: any[]
+    createdAt: string
 }
 
+export interface CommentCreator {
+    _id: string
+    name: string
+    username: string
+    photo: string
+}
 export interface Meta {
     feedMode: string
     pagination: Pagination
@@ -62,3 +79,4 @@ export interface Pagination {
     total: number
     numberOfPages: number
 }
+

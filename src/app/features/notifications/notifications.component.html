@@ -11,16 +11,15 @@
                     Notifications
                 </h1>
 
-                <!-- Unread Count -->
                 <span
                     class="flex h-7 min-w-7 items-center justify-center rounded-full bg-red-500 px-2 text-sm font-bold text-white">
-                    5
+                    {{notifications.length}}
                 </span>
 
             </div>
 
             <!-- Mark All As Read -->
-            <button type="button"
+            <button type="button" (click)="markAllAsRead()"
                 class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
 
                 <i class="fa-solid fa-check text-main-color"></i>
@@ -53,66 +52,21 @@
                 </div>
 
 
-                <!-- Notification 1: Selected -->
-                <div
-                    class="relative cursor-pointer border-b border-slate-100 bg-blue-50 px-4 py-5 transition hover:bg-blue-50/80">
-
-                    <div class="flex items-start gap-3">
-
-                        <!-- Avatar -->
-                        <div class="relative shrink-0">
-
-                            <img src="https://i.pravatar.cc/100?img=47" alt="Sara"
-                                class="h-12 w-12 rounded-full object-cover">
-
-                            <span
-                                class="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-white">
-
-                                <i class="fa-solid fa-heart text-[10px]"></i>
-
-                            </span>
-
-                        </div>
-
-                        <!-- Content -->
-                        <div class="min-w-0 flex-1">
-
-                            <p class="text-sm leading-6 text-slate-800">
-
-                                <span class="font-bold">
-                                    Sara
-                                </span>
-
-                                liked your post
-
-                            </p>
-
-                            <p class="mt-1 line-clamp-2 text-xs leading-5 text-slate-500">
-                                Exploring new places 🏔️
-                            </p>
-
-                            <p class="mt-2 text-xs font-medium text-main-color">
-                                2 minutes ago
-                            </p>
-
-                        </div>
-
-                        <!-- Unread Indicator -->
-                        <span class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-blue-600"></span>
-
-                    </div>
-
-                </div>
+                @for (notification of notifications ; track
+                notification._id) {
 
 
-                <!-- Notification 2: Follow -->
-                <div class="cursor-pointer border-b border-slate-100 px-4 py-5 transition hover:bg-slate-50">
+                <!-- FOLLOW USER -->
+                @if (notification.type === NotificationType.follow_user) {
+
+                <div class="cursor-pointer border-b border-slate-100 px-4 py-5 transition hover:bg-slate-50"
+                    (click)="showNotification(notification._id)" [class.bg-slate-200]="!notification.isRead">
 
                     <div class="flex items-start gap-3">
 
                         <div class="relative shrink-0">
 
-                            <img src="https://i.pravatar.cc/100?img=12" alt="Mohammed"
+                            <img [src]="notification.actor.photo" [alt]="notification.actor.name"
                                 class="h-12 w-12 rounded-full object-cover">
 
                             <span
@@ -124,12 +78,13 @@
 
                         </div>
 
+
                         <div class="min-w-0 flex-1">
 
                             <p class="text-sm leading-6 text-slate-800">
 
                                 <span class="font-bold">
-                                    Mohammed
+                                    {{ notification.actor.name }}
                                 </span>
 
                                 started following you
@@ -137,26 +92,35 @@
                             </p>
 
                             <p class="mt-2 text-xs font-medium text-main-color">
-                                15 minutes ago
+                                {{ notification.createdAt | timeAgo }}
                             </p>
 
                         </div>
 
-                        <span class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-blue-600"></span>
+
+                        @if (!notification.isRead) {
+                        <span class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-blue-600">
+                        </span>
+                        }
 
                     </div>
 
                 </div>
 
+                }
 
-                <!-- Notification 3: Comment -->
-                <div class="cursor-pointer border-b border-slate-100 px-4 py-5 transition hover:bg-slate-50">
+
+                <!-- COMMENT POST -->
+                @if (notification.type === NotificationType.comment_post) {
+
+                <div class="cursor-pointer border-b border-slate-100 px-4 py-5 transition hover:bg-slate-50"
+                    (click)="showNotification(notification._id)" [class.bg-slate-200]="!notification.isRead">
 
                     <div class="flex items-start gap-3">
 
                         <div class="relative shrink-0">
 
-                            <img src="https://i.pravatar.cc/100?img=44" alt="Lina"
+                            <img [src]="notification.actor.photo" [alt]="notification.actor.name"
                                 class="h-12 w-12 rounded-full object-cover">
 
                             <span
@@ -168,179 +132,55 @@
 
                         </div>
 
+
                         <div class="min-w-0 flex-1">
 
                             <p class="text-sm leading-6 text-slate-800">
 
                                 <span class="font-bold">
-                                    Lina
+                                    {{ notification.actor.name }}
                                 </span>
 
                                 commented on your post
 
                             </p>
 
-                            <p class="mt-1 text-xs text-slate-500">
-                                "That looks amazing! ✨"
-                            </p>
 
-                            <p class="mt-2 text-xs text-slate-400">
-                                1 hour ago
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Notification 4: Multiple Likes -->
-                <div class="cursor-pointer border-b border-slate-100 px-4 py-5 transition hover:bg-slate-50">
-
-                    <div class="flex items-start gap-3">
-
-                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100">
-
-                            <i class="fa-solid fa-heart text-xl text-red-500"></i>
-
-                        </div>
-
-                        <div class="min-w-0 flex-1">
-
-                            <p class="text-sm leading-6 text-slate-800">
-
-                                <span class="font-bold">
-                                    3 people
-                                </span>
-
-                                liked your post
-
-                            </p>
-
-                            <p class="mt-2 text-xs text-slate-400">
-                                3 hours ago
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Notification 5: Bookmark -->
-                <div class="cursor-pointer border-b border-slate-100 px-4 py-5 transition hover:bg-slate-50">
-
-                    <div class="flex items-start gap-3">
-
-                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100">
-
-                            <i class="fa-solid fa-bookmark text-xl text-purple-600"></i>
-
-                        </div>
-
-                        <div class="min-w-0 flex-1">
-
-                            <p class="text-sm leading-6 text-slate-800">
-
-                                Your post was
-
-                                <span class="font-bold">
-                                    saved
-                                </span>
-
-                            </p>
-
-                            <p class="mt-2 text-xs text-slate-400">
-                                5 hours ago
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Notification 6: Mention -->
-                <div class="cursor-pointer border-b border-slate-100 px-4 py-5 transition hover:bg-slate-50">
-
-                    <div class="flex items-start gap-3">
-
-                        <div class="relative shrink-0">
-
-                            <img src="https://i.pravatar.cc/100?img=45" alt="Rana"
-                                class="h-12 w-12 rounded-full object-cover">
-
-                            <span
-                                class="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-amber-500 text-white">
-
-                                <i class="fa-solid fa-at text-[10px]"></i>
-
-                            </span>
-
-                        </div>
-
-                        <div class="min-w-0 flex-1">
-
-                            <p class="text-sm leading-6 text-slate-800">
-
-                                <span class="font-bold">
-                                    Rana
-                                </span>
-
-                                mentioned you in a comment
-
-                            </p>
+                            @if (notification.entity.topComment) {
 
                             <p class="mt-1 text-xs text-slate-500">
-                                @tala_1 check this out!
+                                {{ notification.entity.topComment.content }}
                             </p>
 
+                            }
+
+
                             <p class="mt-2 text-xs text-slate-400">
-                                1 day ago
+                                {{ notification.createdAt | timeAgo }}
                             </p>
 
                         </div>
+
+
+                        @if (!notification.isRead) {
+                        <span class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-blue-600">
+                        </span>
+                        }
 
                     </div>
 
                 </div>
 
+                }
 
-                <!-- Notification 7: New Follower -->
-                <div class="cursor-pointer px-4 py-5 transition hover:bg-slate-50">
+                }
 
-                    <div class="flex items-start gap-3">
 
-                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100">
-
-                            <i class="fa-solid fa-users text-xl text-green-600"></i>
-
-                        </div>
-
-                        <div class="min-w-0 flex-1">
-
-                            <p class="text-sm leading-6 text-slate-800">
-
-                                You have a
-
-                                <span class="font-bold">
-                                    new follower
-                                </span>
-
-                            </p>
-
-                            <p class="mt-2 text-xs text-slate-400">
-                                2 days ago
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <button
+                    class="w-[80%] mx-auto  my-4 block rounded-xl border  border-taupe-600/30 outline-0 py-3 cursor-pointer hover:bg-dark-soft/70 hover:text-white"
+                    (click)="loadMore()">
+                    Load More
+                </button>
 
             </div>
 
@@ -349,22 +189,46 @@
             <!-- RIGHT: Notification Details -->
             <div class="min-h-[450px] rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
 
+
+                @if (selectedNotification) {
+
                 <!-- Notification Details Header -->
                 <div class="flex items-start justify-between gap-4">
 
                     <div class="flex items-center gap-4">
 
-                        <img src="https://i.pravatar.cc/100?img=47" alt="Sara"
+                        <img [src]="selectedNotification.actor.photo" [alt]="selectedNotification.actor.name"
                             class="h-14 w-14 rounded-full object-cover">
 
                         <div>
 
+
+                            @if (selectedNotification.type === NotificationType.follow_user) {
+
                             <h2 class="text-base font-bold text-slate-900 sm:text-lg">
-                                Sara liked your post
+
+                                {{ selectedNotification.actor.name }}
+                                started following you
+
                             </h2>
 
+                            }
+
+
+                            @if (selectedNotification.type === NotificationType.comment_post) {
+
+                            <h2 class="text-base font-bold text-slate-900 sm:text-lg">
+
+                                {{ selectedNotification.actor.name }}
+                                commented on your post
+
+                            </h2>
+
+                            }
+
+
                             <p class="mt-1 text-sm text-slate-500">
-                                2 minutes ago
+                                {{ selectedNotification.createdAt | timeAgo }}
                             </p>
 
                         </div>
@@ -372,7 +236,6 @@
                     </div>
 
 
-                    <!-- More Options -->
                     <button type="button" aria-label="More options"
                         class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100">
 
@@ -383,40 +246,102 @@
                 </div>
 
 
-                <!-- Divider -->
                 <div class="my-6 border-t border-slate-100"></div>
 
 
-                <!-- Related Post -->
-                <div
-                    class="flex cursor-pointer flex-col gap-4 rounded-xl border border-slate-200 p-3 transition hover:bg-slate-50 sm:flex-row sm:items-center">
+                <!-- FOLLOW DETAILS -->
+                @if (selectedNotification.type === NotificationType.follow_user) {
 
-                    <!-- Post Image -->
-                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400"
-                        alt="Mountain landscape"
-                        class="h-44 w-full rounded-lg object-cover sm:h-24 sm:w-28 sm:shrink-0">
+                <div class="flex items-center gap-4 rounded-xl border border-slate-200 p-4">
 
-                    <!-- Post Content -->
-                    <div class="min-w-0 flex-1">
+                    <img [src]="selectedNotification.entity.photo" [alt]="selectedNotification.entity.name"
+                        class="h-16 w-16 rounded-full object-cover">
+
+                    <div>
 
                         <h3 class="font-bold text-slate-900">
-                            Exploring new places 🏔️
+                            {{ selectedNotification.entity.name }}
                         </h3>
 
-                        <p class="mt-2 line-clamp-2 text-sm leading-6 text-slate-500">
-                            Discovering beautiful landscapes and creating
-                            unforgettable memories along the way.
+                        <p class="mt-1 text-sm text-slate-500">
+                            &#64;{{ selectedNotification.entity.username }}
                         </p>
 
                     </div>
 
                 </div>
 
+                }
 
-                <!-- View Post Button -->
+
+                <!-- COMMENT DETAILS -->
+                @if (selectedNotification.type === NotificationType.comment_post) {
+
+
+                @if (selectedNotification.entity.topComment) {
+
+                <div class="rounded-xl border border-slate-200 p-4">
+
+                    <p class="text-sm font-bold text-slate-900">
+                        {{ selectedNotification.entity.topComment.commentCreator.name }}
+                    </p>
+
+                    <p class="mt-2 text-sm text-slate-600">
+                        {{ selectedNotification.entity.topComment.content }}
+                    </p>
+
+                    <p class="mt-2 text-xs text-slate-400">
+                        {{ selectedNotification.entity.topComment.createdAt | timeAgo }}
+                    </p>
+
+                </div>
+
+                }
+
+
+                <!-- Related Post -->
+                <div
+                    class="mt-4 flex cursor-pointer flex-col gap-4 rounded-xl border border-slate-200 p-3 transition hover:bg-slate-50 sm:flex-row sm:items-center">
+
+
+                    @if (selectedNotification.entity.photo) {
+
+                    <img [src]="selectedNotification.entity.photo" alt="Post image"
+                        class="h-44 w-full rounded-lg object-cover sm:h-24 sm:w-28 sm:shrink-0">
+
+                    }
+
+
+                    <div class="min-w-0 flex-1">
+
+                        @if (selectedNotification.entity.body) {
+
+                        <p class="line-clamp-2 text-sm leading-6 text-slate-500">
+                            {{ selectedNotification.entity.body }}
+                        </p>
+
+                        }
+
+                        <div class="mt-2 flex gap-4 text-xs text-slate-400">
+
+                            <span>
+                                {{ selectedNotification.entity.likesCount }} likes
+                            </span>
+
+                            <span>
+                                {{ selectedNotification.entity.commentsCount }} comments
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
                 <div class="mt-5 flex justify-end">
 
-                    <button type="button"
+                    <button type="button" (click)="viewPost(selectedNotification.entity._id)"
                         class="rounded-xl bg-main-color px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90">
 
                         View Post
@@ -426,6 +351,10 @@
                     </button>
 
                 </div>
+
+                }
+
+                }
 
             </div>
 

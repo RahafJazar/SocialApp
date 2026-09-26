@@ -34,6 +34,7 @@
     "@ngx-translate/http-loader": "^18.0.0",
     "@tailwindcss/postcss": "^4.3.3",
     "flowbite": "^4.0.2",
+    "ngx-pagination": "^6.0.3",
     "ngx-spinner": "^22.0.1",
     "ngx-toastr": "^20.0.5",
     "postcss": "^8.5.26",

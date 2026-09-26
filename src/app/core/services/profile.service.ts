@@ -6,6 +6,7 @@ import { UserDataResponse } from '../models/user-data.interface';
 import { FollowDataResponse } from '../models/follow-data-response.interface';
 import { PostsDataResponse } from '../models/posts-data.interface';
 import { BookmarksDataResponse } from '../models/bookmarks-data.interface';
+import { NotificationsDataResponse } from '../models/notifications-data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,8 @@ export class ProfileService {
 
   getBookmarks(): Observable<BookmarksDataResponse> {
     return this.httpClient.get<BookmarksDataResponse>(`${environment.base_url}/users/bookmarks`)
+  }
+  getNotifications(limit: number = 10, page: number = 1, unread: boolean = false): Observable<NotificationsDataResponse> {
+    return this.httpClient.get<NotificationsDataResponse>(`${environment.base_url}/notifications?unread=${unread}&page=${page}&limit=${limit}`)
   }
 }

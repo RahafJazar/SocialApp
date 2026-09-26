@@ -35,6 +35,9 @@ export class SuggestedFriendsComponent implements OnInit {
     if (this.visibleCounts > this.suggestions.length) {
       this.visibleCounts -= 3;
     }
-    this.visibleCounts += 3;
+    else {
+      this.visibleCounts += 3;
+    }
+
   }
 }

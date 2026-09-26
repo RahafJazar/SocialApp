@@ -17,6 +17,9 @@
         },
         "@schematics/angular:directive": {
           "type": "directive"
+        },
+        "@schematics/angular:enum": {
+          "type": "enum"
         }
       },
       "root": "",
