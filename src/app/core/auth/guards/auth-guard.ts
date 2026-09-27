@@ -9,9 +9,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   const socialToken = localStorage.getItem("socialToken");
 
   if (!socialToken) {
-    router.createUrlTree(['/login']);
+    return router.createUrlTree(['/login']);
 
-    return false
   }
 
   return true;

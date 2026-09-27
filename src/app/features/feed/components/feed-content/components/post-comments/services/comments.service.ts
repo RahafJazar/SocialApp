@@ -15,8 +15,8 @@ export class CommentsService {
     return this.httpClient.get<CommentsDataResponse>(`${prodEnvironment.base_url}/posts/${postID}/comments?page=${page}&limit=${limit}`);
 
   }
-  createComment(postID: string, data: Object): Observable<any> {
-    return this.httpClient.get<any>(`${prodEnvironment.base_url}/posts/${postID}/comments`, data);
+  createComment(request: FormData, postId: string): Observable<any> {
+    return this.httpClient.post<any>(`${prodEnvironment.base_url}/posts/${postId}/comments`, request);
 
   }
 

@@ -8,7 +8,7 @@ export const guestGuard: CanActivateFn = (route, state) => {
   // if we have token ->  and try to go to login -> retiurn to feed
   // if we  don't have token ->go to token  
   if (socialToken) {
-    router.createUrlTree(['/feed']);
+    return router.createUrlTree(['/feed']);
 
   }
   return true;
