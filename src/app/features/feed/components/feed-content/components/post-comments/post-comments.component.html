@@ -1,7 +1,8 @@
 <section class="border border-slate-200 rounded-[16px] p-4 bg-white" aria-label="Comments">
     <div class="flex items-center gap-2 mb-2">
         <h3 class="font-bold text-[15px] text-slate-900">Comments</h3>
-        <span class="bg-blue-100 text-blue-600 text-[12px] font-bold px-2 py-0.5 rounded-full">1</span>
+        <span
+            class="bg-blue-100 text-blue-600 text-[12px] font-bold px-2 py-0.5 rounded-full">{{commentList.length}}</span>
     </div>
 
     <!-- comment details  -->
@@ -27,6 +28,11 @@
                 <p class="text-[14px] text-slate-800 wrap-break-word">
                     {{comment.content}}
                 </p>
+                <div class="mb-4 relative ">
+                    <img class="max-h-50 w-50 rounded-lg object-cover" [src]="comment.image" alt="create post img" />
+
+
+                </div>
             </div>
 
             <div class="flex items-center gap-3 mt-1 ml-2 text-[12px] text-slate-500 font-semibold">
@@ -47,16 +53,24 @@
         <img [src]="userData.photo" [alt]="userData.name"
             class="w-8 h-8 rounded-full object-cover shrink-0 mt-1 bg-slate-100 border border-slate-50" />
 
-        <div [formGroup]="commentForm"
+        <div #form [formGroup]="commentForm"
             class="flex-1 bg-slate-100 border border-transparent focus-within:border-blue-300 focus-within:ring-4 focus-within:ring-blue-50 focus-within:bg-white transition-all rounded-[20px] p-2 flex flex-col">
             <textarea formControlName="content"
                 class="ring-0 w-full bg-transparent border-none text-[14px] text-slate-800 placeholder-slate-500 resize-none outline-none px-2 pt-1 pb-3 min-h-15"
                 placeholder="Comment as ..."></textarea>
+            @if (commentImgUrl) {
+            <div class="mb-4 relative ">
+                <img class="max-h-60 w-full rounded-lg object-cover" [src]="commentImgUrl" alt="create post img" />
+                <span class="text-3xl absolute top-0 end-5 text-black/50 cursor-pointer " (click)="removeFile()">
+                    <i class="fa-solid fa-x"></i>
+                </span>
 
+            </div>
+            }
             <div class="flex items-center justify-between px-1">
                 <div class="flex items-center gap-1">
-                    <input type="file" id="file" class="hidden" (change)="onImgSelected($event)" />
-                    <label for="file"
+                    <input type="file" [id]="'comment-file-'+postId" class="hidden" (change)="changeFile($event)" />
+                    <label [for]="'comment-file-'+postId"
                         class="flex cursor-pointer items-center gap-2 text-slate-600 hover:bg-slate-50 px-2 py-1.5 rounded-lg transition-colors group">
                         <i
                             class="fa-regular fa-image text-[#22c55e] text-[1.1rem] group-hover:scale-110 transition-transform"></i>
@@ -64,7 +78,7 @@
                     </label>
                 </div>
 
-                <button (click)="sendComment()"
+                <button (click)="sendComment()" type="submit"
                     class="w-8 cursor-pointer h-8 rounded-full bg-blue-400 hover:bg-blue-500 text-white flex items-center justify-center transition-colors">
                     <i class="fa-solid fa-paper-plane text-[13px] ms-1 mt-.5"></i>
                 </button>

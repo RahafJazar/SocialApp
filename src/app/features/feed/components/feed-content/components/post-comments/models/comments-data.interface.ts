@@ -14,6 +14,7 @@ export interface comment {
     _id: string;
     content: string | null;
     commentCreator: CommentCreator;
+    image: string;
     post: string;
     parentComment: string | null;
     likes: string[];
