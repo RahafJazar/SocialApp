@@ -27,6 +27,10 @@ export class ProfileService {
     return this.httpClient.get<PostsDataResponse>(`${environment.base_url}/users/${myId}/posts`)
   }
 
+  getUserProfile(): Observable<UserDataResponse> {
+
+  }
+
   getBookmarks(): Observable<BookmarksDataResponse> {
     return this.httpClient.get<BookmarksDataResponse>(`${environment.base_url}/users/bookmarks`)
   }

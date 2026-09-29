@@ -25,6 +25,7 @@ export class FeedContentComponent implements OnInit {
   //2 inputs only -> use FormControl instead of FormGroup
   contentControl: FormControl = new FormControl('', []);
   privacyControl: FormControl = new FormControl('public', null);
+  showComments: Record<string, boolean> = {};
 
 
 
@@ -132,5 +133,10 @@ export class FeedContentComponent implements OnInit {
         }
       }
     )
+  }
+
+  //show user profile
+  showProfile(userId: string): void {
+
   }
 }

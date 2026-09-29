@@ -36,7 +36,7 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'feed', pathMatch: 'full' },
             { path: 'feed', component: FeedComponent },
-            { path: 'profile', component: ProfileComponent },
+            { path: 'profile/:userId', component: ProfileComponent },
             { path: 'notifications', component: NotificationsComponent },
             { path: 'changePassword', component: ChangePasswordComponent },
             { path: 'details/:id', component: DetailsComponent },

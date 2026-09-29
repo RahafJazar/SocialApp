@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
   private readonly authService = inject(AuthService);
 
   ngOnInit(): void {
-    this.getUserImg()
+    this.getUserData()
   }
 
   toggleMobileMenu(): void {
@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
     this.showUserMenu = !this.showUserMenu;
   }
 
-  getUserImg() {
+  getUserData() {
     const userdata = JSON.parse(localStorage.getItem('userData')!)
     if (userdata) {
       this.userData = userdata

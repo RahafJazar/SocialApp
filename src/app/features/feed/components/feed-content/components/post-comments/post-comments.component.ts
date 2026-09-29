@@ -1,4 +1,4 @@
-import { Component, contentChild, inject, Input, OnInit } from '@angular/core';
+import { Component, contentChild, EventEmitter, inject, Input, OnInit, Output, output } from '@angular/core';
 import { CommentsService } from './services/comments.service';
 import { comment } from './models/comments-data.interface';
 import { UserInfo } from '../../../../../../core/models/user-data.interface';
@@ -14,8 +14,10 @@ import { count } from 'rxjs';
 export class PostCommentsComponent implements OnInit {
 
   @Input({ required: true }) postId: string = '';
+  @Output() commentAdded = new EventEmitter<void>();
   private readonly commentsService = inject(CommentsService);
   private fb = inject(FormBuilder);
+
   selectedFile !: File;
   commentList: comment[] = [];
   userData: UserInfo = {} as UserInfo;
@@ -67,7 +69,14 @@ export class PostCommentsComponent implements OnInit {
       console.log(resp);
       //resetFormData 
       this.commentForm.reset();
-      this.getPostComments(this.postId)
+      this.removeFile();
+
+      //get comments 
+      this.getPostComments(this.postId);
+
+
+      //update post comments count 
+      this.updatePostComments();
     })
 
   }
@@ -98,5 +107,10 @@ export class PostCommentsComponent implements OnInit {
 
   removeFile(): void {
     this.commentImgUrl = '';
+  }
+
+
+  updatePostComments(): void {
+    this.commentAdded.emit()
   }
 }

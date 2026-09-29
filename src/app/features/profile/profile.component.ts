@@ -9,6 +9,7 @@ import { ProfileHeaderComponent } from './components/profile-header/profile-head
 import { ProfilePostsComponent } from './components/profile-posts/profile-posts.component';
 import { Bookmark } from '../../core/models/bookmarks-data.interface';
 import { ProfileBookmarksComponent } from "./components/profile-bookmarks/profile-bookmarks.component";
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -20,21 +21,26 @@ import { ProfileBookmarksComponent } from "./components/profile-bookmarks/profil
 export class ProfileComponent implements OnInit {
   private profileService = inject(ProfileService);
   private postsService = inject(PostsService);
+  private readonly activatedRoute = inject(ActivatedRoute);
   suggestions: Suggestion[] = [];
   myPosts: Post[] = [];
   userData: UserInfo = {} as UserInfo
-  userId !: string | undefined;
+  userId: string = '';
   activeTab: 'Posts' | 'Bookmarks' = 'Posts';
   bookmarks: Bookmark[] = [];
 
 
 
   ngOnInit(): void {
-    this.getMyProfile()
+    this.getUserID();
+    this.getUserProfile(this.userId);
   }
-
-
-  getMyProfile(): void {
+  getUserID() {
+    this.activatedRoute.paramMap.subscribe((param) => {
+      this.userId = param.get('userId')!;
+    })
+  }
+  getUserProfile(userId: string): void {
     this.profileService.getMyProfile().subscribe({
       next: (data: UserDataResponse) => {
         if (data.success) {

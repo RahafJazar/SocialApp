@@ -72,7 +72,7 @@
         <!-- user details  -->
         <div class="flex items-start justify-between mb-3">
             <div class="flex items-center gap-3">
-                <img [src]="post.user.photo" [alt]="post.user.name"
+                <img [src]="post.user.photo" [alt]="post.user.name" (click)="showProfile(post.user._id)"
                     class="size-10 rounded-full object-cover shrink-0 bg-slate-100 border border-slate-50" />
 
                 <div>
@@ -166,7 +166,8 @@
             </div>
             <div class="flex items-center gap-3">
                 <span class="cursor-pointer hover:underline">{{post.sharesCount}} shares</span>
-                <span class="cursor-pointer hover:underline">{{post.commentsCount}} comments</span>
+                <span class="cursor-pointer hover:underline" (click)="showComments[post.id]=true">{{post.commentsCount}}
+                    comments</span>
                 <button [routerLink]="['/details',post._id]"
                     class="font-semibold cursor-pointer text-blue-600 hover:underline">
                     View details
@@ -183,7 +184,7 @@
                 <i class="fa-regular fa-thumbs-up text-lg"></i>
                 Like
             </button>
-            <button #commentBtn
+            <button (click)="showComments[post._id]=true"
                 class="flex-1 flex cursor-pointer items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors">
                 <i class="fa-regular fa-message text-lg"></i>
                 Comment
@@ -198,8 +199,8 @@
         <hr class="border-t border-slate-200 mt-1 mb-4" />
 
         <!--- Comments -->
-        @defer (on interaction(commentBtn)) {
-        <app-post-comments [postId]="post._id" />
+        @defer (when showComments[post._id] ) {
+        <app-post-comments [postId]="post._id" (commentAdded)="post.commentsCount = post.commentsCount+1" />
         }
 
 
