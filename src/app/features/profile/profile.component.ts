@@ -23,36 +23,31 @@ export class ProfileComponent implements OnInit {
   private postsService = inject(PostsService);
   private readonly activatedRoute = inject(ActivatedRoute);
   suggestions: Suggestion[] = [];
-  myPosts: Post[] = [];
+  posts: Post[] = [];
   userData: UserInfo = {} as UserInfo
   userId: string = '';
   activeTab: 'Posts' | 'Bookmarks' = 'Posts';
   bookmarks: Bookmark[] = [];
-
+  isMyProfile: boolean = false;
 
 
   ngOnInit(): void {
     this.getUserID();
-    this.getUserProfile(this.userId);
+    this.getProfile(this.userId);
   }
   getUserID() {
     this.activatedRoute.paramMap.subscribe((param) => {
       this.userId = param.get('userId')!;
+      this.isMyProfile = (this.userId == JSON.parse(localStorage.getItem('userData') ?? '')._id!);
     })
   }
-  getUserProfile(userId: string): void {
-    this.profileService.getMyProfile().subscribe({
-      next: (data: UserDataResponse) => {
-        if (data.success) {
-          console.log(`profile data : \n`, data)
-          this.userData = data.data.user;
-          this.userId = this.userData._id ?? this.userData.id;
-          this.getFollowSuggestions();
-          this.getMyPosts();
-          this.getBookmarks();
-        }
-      }
-    })
+  getProfile(userId: string): void {
+    if (this.isMyProfile) {
+      this.getMyProfile();
+    } else {
+      this.getUserProfile(userId)
+    }
+
   }
 
 
@@ -66,11 +61,42 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
-
+  getMyProfile(): void {
+    this.profileService.getMyProfile().subscribe({
+      next: (data: UserDataResponse) => {
+        if (data.success) {
+          console.log(`profile data : \n`, data)
+          this.userData = data.data.user;
+          this.getFollowSuggestions();
+          this.getMyPosts();
+          this.getBookmarks();
+        }
+      }
+    })
+  }
+  getUserProfile(userId: string): void {
+    this.profileService.getUserProfile(userId).subscribe({
+      next: (data: UserDataResponse) => {
+        if (data.success) {
+          console.log(`profile data : \n`, data)
+          this.userData = data.data.user;
+          this.getFollowSuggestions();
+          this.getUserPosts(userId);
+        }
+      }
+    })
+  }
   getMyPosts(): void {
-    this.profileService.getMyPosts(this.userId).subscribe({
+    this.postsService.getMyPosts(this.userId).subscribe({
       next: (resp) => {
-        this.myPosts = resp.data.posts;
+        this.posts = resp.data.posts;
+      }
+    })
+  }
+  getUserPosts(userId: string): void {
+    this.postsService.getUserPosts(this.userId).subscribe({
+      next: (resp) => {
+        this.posts = resp.data.posts;
       }
     })
   }

@@ -96,7 +96,7 @@
             <!-- Posts / Bookmarks area -->
             @if(activeTab=='Posts'){
             <div class="space-y-4">
-                @for (post of myPosts; track post._id) {
+                @for (post of posts; track post._id) {
 
                 <app-profile-posts [post]="post" [userId]="userId" (postDeleted)="deletePostItem($event)" />
                 }

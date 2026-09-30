@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment as prodEnvironment } from '../../../environments/environment';
+import { environment, environment as prodEnvironment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { PostsDataResponse } from '../models/posts-data.interface';
 import { PostMutationDataResponce } from '../models/post-mutation-data.interface';
@@ -28,5 +28,10 @@ export class PostsService {
   deletePost(postID: string | number): Observable<any> {
     return this.httpClient.delete<any>(`${prodEnvironment.base_url}/posts/${postID}`)
   }
-
+  getUserPosts(userId: string): Observable<PostsDataResponse> {
+    return this.httpClient.get<PostsDataResponse>(`${environment.base_url}/users/${userId}/posts`)
+  }
+  getMyPosts(myId: string | undefined): Observable<PostsDataResponse> {
+    return this.httpClient.get<PostsDataResponse>(`${environment.base_url}/users/${myId}/posts`)
+  }
 }

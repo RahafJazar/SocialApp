@@ -4,7 +4,7 @@ import { PostsService } from '../../../../core/services/posts.service';
 import { BasePost, Data, Post, PostsDataResponse, User } from '../../../../core/models/posts-data.interface';
 import { Form, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PostCommentsComponent } from './components/post-comments/post-comments.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
 
@@ -17,6 +17,7 @@ import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
 })
 export class FeedContentComponent implements OnInit {
   private readonly postsService = inject(PostsService);
+  private readonly router = inject(Router);
   userId: string = '';
   selectedFile!: File;
   posts: BasePost[] = [];
@@ -137,6 +138,6 @@ export class FeedContentComponent implements OnInit {
 
   //show user profile
   showProfile(userId: string): void {
-
+    this.router.navigate(['/profile', userId])
   }
 }

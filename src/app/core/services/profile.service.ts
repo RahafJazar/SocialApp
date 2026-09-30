@@ -23,12 +23,10 @@ export class ProfileService {
     return this.httpClient.get<FollowDataResponse>(`${environment.base_url}/users/suggestions?limit=${limit}`);
   }
 
-  getMyPosts(myId: string | undefined): Observable<PostsDataResponse> {
-    return this.httpClient.get<PostsDataResponse>(`${environment.base_url}/users/${myId}/posts`)
-  }
 
-  getUserProfile(): Observable<UserDataResponse> {
 
+  getUserProfile(userId: string): Observable<UserDataResponse> {
+    return this.httpClient.get<UserDataResponse>(`${environment.base_url}/users/${userId}/profile`)
   }
 
   getBookmarks(): Observable<BookmarksDataResponse> {
