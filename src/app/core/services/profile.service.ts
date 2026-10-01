@@ -35,4 +35,7 @@ export class ProfileService {
   getNotifications(limit: number = 10, page: number = 1, unread: boolean = false): Observable<NotificationsDataResponse> {
     return this.httpClient.get<NotificationsDataResponse>(`${environment.base_url}/notifications?unread=${unread}&page=${page}&limit=${limit}`)
   }
+  getHomeFeed(only: string, limit: number): Observable<any> {
+    return this.httpClient.get<any>(``);
+  }
 }

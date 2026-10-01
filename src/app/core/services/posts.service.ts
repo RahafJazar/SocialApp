@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment, environment as prodEnvironment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { PostsDataResponse } from '../models/posts-data.interface';
-import { PostMutationDataResponce } from '../models/post-mutation-data.interface';
+import { Post, PostMutationDataResponce } from '../models/post-mutation-data.interface';
 import { PostDetailsDataResponce } from '../../features/details/models/post-details-data.interface';
 
 @Injectable({
@@ -33,5 +33,9 @@ export class PostsService {
   }
   getMyPosts(myId: string | undefined): Observable<PostsDataResponse> {
     return this.httpClient.get<PostsDataResponse>(`${environment.base_url}/users/${myId}/posts`)
+  }
+
+  getHomeFeed(only: string, limit: number): Observable<Post> {
+    return this.httpClient.get<Post>(``);
   }
 }
