@@ -1,0 +1,12 @@
+<div class="flex justify-center">
+
+    <p-dialog [(visible)]="visible" [modal]="true" [header]="title" [style]="{ width: width, maxWidth: '95vw' }">
+        <!----محتوى الديالوج-->
+        <ng-content></ng-content>
+
+        <!----الأزرار-->
+        <ng-template #footer>
+            <ng-content select="[dialogFooter]"></ng-content>
+        </ng-template>
+    </p-dialog>
+</div>

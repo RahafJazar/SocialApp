@@ -1,3 +1,4 @@
+<app-return-pack (out)="handleClickBack()" [pageName]="'Feed'"></app-return-pack>
 <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm mx-auto max-w-5xl space-y-4">
     <div class="mb-3 flex items-center justify-between gap-2">
         <div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
@@ -36,7 +37,16 @@
                         <p class="truncate text-xs text-slate-500">{{suggestion.username}}</p>
                     </div>
                 </button>
-                @if (!followloading ) {
+
+                @if(followloading && followedUser == suggestion._id){
+                <button (click)="followUser(suggestion._id)"
+                    class="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-bold transition disabled:opacity-60 bg-[#e7f3ff] text-[#1877f2] hover:bg-[#d8ebff] cursor-pointer">
+                    Follow...
+                    <span class="loader mx-1"></span>
+                </button>
+
+                }
+                @else {
                 <button (click)="followUser(suggestion._id)"
                     class="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-bold transition disabled:opacity-60 bg-[#e7f3ff] text-[#1877f2] hover:bg-[#d8ebff] cursor-pointer"><svg
                         xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
@@ -47,10 +57,6 @@
                         <line x1="19" x2="19" y1="8" y2="14"></line>
                         <line x1="22" x2="16" y1="11" y2="11"></line>
                     </svg>Follow</button>
-                }
-                @else if(followloading && followedUser === suggestion._id){
-                <span class="loader"></span>
-                <span>Follow...</span>
                 }
 
             </div>

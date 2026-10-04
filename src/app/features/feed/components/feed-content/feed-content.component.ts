@@ -9,13 +9,15 @@ import { PostCommentsComponent } from './components/post-comments/post-comments.
 import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
-
+import { DialogModule } from 'primeng/dialog';
 import { Bookmark } from '../../../../core/models/bookmarks-data.interface';
 import { InfiniteScrollDirective } from '../../../../core/directives/infinite-scroll.directive';
+import { PopoverComponent } from '../../../../shared/ui/popover/popover.component';
+import { DialogComponent } from '../../../../shared/ui/dialog/dialog.component';
 
 @Component({
   selector: 'app-feed-content',
-  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink, DatePipe, TimeAgoPipe, InfiniteScrollDirective],
+  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink, DatePipe, TimeAgoPipe, InfiniteScrollDirective, DialogComponent, DialogModule],
   templateUrl: './feed-content.component.html',
   styleUrl: './feed-content.component.css',
 })
@@ -36,6 +38,11 @@ export class FeedContentComponent implements OnInit {
   only: string = 'following';
   hasMore: boolean = true;
   isLodaing: boolean = false;
+
+  // ضيفي DialogModule إلى imports
+  visible = false;
+
+
   ngOnInit(): void {
     this.getUserData();
     this.getFeedPosts(this.only, this.limit, this.page);

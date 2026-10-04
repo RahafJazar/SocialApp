@@ -1,0 +1,23 @@
+<div class="flex justify-center">
+    <button type="button" pButton severity="secondary" variant="outlined" (click)="op.toggle($event)">Show
+        Popover</button>
+    <p-popover #op>
+        <ng-content></ng-content>
+        <!-- <div class="max-w-72 w-full">
+            <div class="flex items-center justify-between">
+                <span class="font-semibold text-sm">Create a New Workspace</span>
+            </div>
+            <p class="text-sm text-muted-color mt-2 mb-0!">Name your workspace to get started. You can always change
+                this later.</p>
+            <input pInputText placeholder="Workspace Name" class="mt-3 w-full" />
+            <div class="flex items-center justify-between mt-4">
+                <span class="text-xs text-surface-500 dark:text-surface-400">Lowercase letters and dashes only</span>
+                <div class="flex items-center gap-2">
+                    <button type="button" pButton severity="secondary" variant="outlined" size="small"
+                        (click)="op.hide()">Cancel</button>
+                    <button type="button" pButton size="small" (click)="op.hide()">Create</button>
+                </div>
+            </div>
+        </div> -->
+    </p-popover>
+</div>

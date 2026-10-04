@@ -9,10 +9,11 @@ import { ProfileService } from '../../../../../core/services/profile.service';
 import { SearchPipe } from '../../../../../shared/pipes/search-pipe';
 
 import { finalize, forkJoin } from 'rxjs';
+import { ReturnPackComponent } from '../../../../../shared/ui/return-back/return-pack/return-pack.component';
 
 @Component({
   selector: 'app-all-siggested',
-  imports: [SearchPipe],
+  imports: [SearchPipe, ReturnPackComponent],
   templateUrl: './all-siggested.component.html',
   styleUrl: './all-siggested.component.css',
 })
@@ -221,5 +222,9 @@ export class AllSiggestedComponent implements OnInit {
   SearchUser(event: Event): void {
     this.searchVal =
       (event.target as HTMLInputElement).value;
+  }
+
+  handleClickBack() {
+
   }
 }

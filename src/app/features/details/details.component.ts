@@ -3,10 +3,11 @@ import { PostsService } from '../../core/services/posts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from './models/post-details-data.interface';
 import { UserInfo } from '../../core/models/user-data.interface';
+import { ReturnPackComponent } from "../../shared/ui/return-back/return-pack/return-pack.component";
 
 @Component({
   selector: 'app-details',
-  imports: [],
+  imports: [ReturnPackComponent],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css',
 })
@@ -71,5 +72,9 @@ export class DetailsComponent implements OnInit {
         }
       }
     )
+  }
+
+  handleClickBack() {
+
   }
 }

@@ -2,11 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../../../core/services/profile.service';
 import { FollowDataResponse, Suggestion } from '../../../../core/models/follow-data-response.interface';
 import { SlicePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-suggested-friends',
-  imports: [SlicePipe],
+  imports: [SlicePipe, RouterLink],
   templateUrl: './suggested-friends.component.html',
   styleUrl: './suggested-friends.component.css',
 })
@@ -44,6 +44,6 @@ export class SuggestedFriendsComponent implements OnInit {
   }
 
   ShowAllSuggestions() {
-    this.router.navigate(['/all-suggestions'])
+    this.router.navigate(['all-suggestions'])
   }
 }

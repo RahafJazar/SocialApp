@@ -92,9 +92,42 @@
                 </div>
             </div>
 
-            <button type="button" class="p-2 text-slate-500 hover:bg-slate-100 rounded-full">
-                <i class="fa-solid fa-ellipsis"></i>
-            </button>
+            <div class="relative group">
+                <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots"
+                    class="text-heading bg-neutral-primary box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none cursor-pointer rotate-90"
+                    type="button">
+                    <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="3"
+                            d="M12 6h.01M12 12h.01M12 18h.01" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown menu -->
+                <div id="dropdownDots"
+                    class="z-30 hidden group-hover:block absolute right-full top-[50%] bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+                    <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownMenuIconButton">
+                        <li>
+                            <button
+                                class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                                Save post
+                            </button>
+
+                            @if(post.user._id=== userId){
+                            <button
+                                class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                                Edit post
+                            </button>
+                            <button (click)="deletePostItem(post._id )"
+                                class="inline-flex text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                                Delete post
+                            </button>
+                            }
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
         </div>
 
@@ -250,8 +283,8 @@
                 </button>
 
                 <button type="button" class="flex-1 flex items-center justify-center gap-2
-               py-2.5 rounded-lg text-sm font-semibold
-               text-slate-600 hover:bg-slate-100">
+               py-2.5 rounded-lg text-sm font-semibold 
+               text-slate-600 hover:bg-slate-100" (click)="visible=true" #shareBtn>
 
                     <i class="fa-solid fa-share text-lg"></i>
                     Share
@@ -269,7 +302,176 @@
             <app-post-comments [postId]="post._id" (commentAdded)="post.commentsCount = post.commentsCount + 1" />
         </div>
         }
+        <!---Share-->
+        @defer (on interaction (shareBtn)) {
+        <app-dialog #shareDialog title="Share Post" width="30rem">
 
+            <textarea #shareText placeholder="Write something..." class="w-full rounded-lg border p-3"></textarea>
+            <!-- POST HEADER -->
+            <div class="flex items-start justify-between p-4 pb-2">
+
+                <div class="flex items-center gap-3">
+                    <img [src]="post.user.photo" [alt]="post.user.name" (click)="showProfile(post.user._id)"
+                        class="w-11 h-11 rounded-full object-cover cursor-pointer" />
+
+                    <div>
+                        <p (click)="showProfile(post.user._id)"
+                            class="font-bold text-slate-900 cursor-pointer hover:underline">
+                            {{ post.user.name }}
+                        </p>
+
+                        <div class="flex items-center gap-2 text-xs text-slate-500">
+                            <span>{{ post.createdAt | timeAgo }}</span>
+                            <span>·</span>
+                            <span>{{ post.privacy }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots"
+                        class="text-heading bg-neutral-primary box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none cursor-pointer rotate-90"
+                        type="button">
+                        <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-width="3"
+                                d="M12 6h.01M12 12h.01M12 18h.01" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown menu -->
+                    <div id="dropdownDots"
+                        class="z-30 hidden group-hover:block absolute right-full top-[50%] bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+                        <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownMenuIconButton">
+                            <li>
+                                <button
+                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                                    Save post
+                                </button>
+
+                                @if(post.user._id=== userId){
+                                <button
+                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                                    Edit post
+                                </button>
+                                <button (click)="deletePostItem(post._id )"
+                                    class="inline-flex text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                                    Delete post
+                                </button>
+                                }
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- SHARED POST INDICATOR -->
+            @if (post.sharedPost) {
+            <div class="px-4 pb-2 flex items-center gap-2 text-xs text-slate-500">
+                <i class="fa-solid fa-retweet"></i>
+                <span>Shared a post</span>
+            </div>
+            }
+
+
+            <!-- CURRENT POST CONTENT -->
+            @if (post.body) {
+            <div class="px-4 py-3">
+                <p class="text-[15px] text-slate-800 whitespace-pre-line break-words">
+                    {{ post.body }}
+                </p>
+            </div>
+            }
+
+
+            <!-- SHARED ORIGINAL POST -->
+            @if (post.sharedPost; as original) {
+
+            <div class="mx-4 mb-4 border border-slate-200 rounded-xl overflow-hidden">
+
+                <!-- Original author -->
+                <div class="flex items-center gap-3 p-3">
+
+                    <img [src]="original.user.photo" [alt]="original.user.name" (click)="showProfile(original.user._id)"
+                        class="w-9 h-9 rounded-full object-cover cursor-pointer" />
+
+                    <div class="min-w-0 flex justify-between gap-5">
+                        <div>
+                            <p (click)="showProfile(original.user._id)"
+                                class="text-sm font-bold text-slate-900 cursor-pointer hover:underline">
+                                {{ original.user.name }}
+                            </p>
+
+                            <div class="flex items-center gap-2 text-xs text-slate-500">
+                                <span>{{ original.createdAt | timeAgo }}</span>
+                                <span>·</span>
+                                <span>{{ original.privacy }}</span>
+                            </div>
+                        </div>
+
+                        <button [routerLink]="['/details',post._id]" class=" ml-auto inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold
+                        text-[#1877f2] hover:bg-[#e7f3ff]">Original
+                            Post<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+                                <path d="M15 3h6v6"></path>
+                                <path d="M10 14 21 3"></path>
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            </svg></button>
+                    </div>
+
+                </div>
+
+
+                <!-- Original post body -->
+                @if (original.body) {
+                <p class="px-3 pb-3 text-sm text-slate-700 whitespace-pre-line break-words">
+                    {{ original.body }}
+                </p>
+                }
+
+
+                <!-- Original post image -->
+                @if (original.image) {
+                <img [src]="original.image" alt="Original post image"
+                    class="w-full max-h-96 object-contain bg-slate-50" />
+                }
+
+
+                <!-- Original post attribution -->
+                <div class="px-3 py-2 bg-slate-50 border-t border-slate-100">
+                    <span class="text-xs text-slate-500">
+                        Original post by
+                        <span class="font-semibold text-slate-700">
+                            {{ original.user.name }}
+                        </span>
+                    </span>
+                </div>
+
+            </div>
+
+            } @else {
+
+            <!-- NORMAL POST IMAGE -->
+            @if (post.image) {
+            <img [src]="post.image" alt="Post image" class="w-full max-h-[450px] object-contain bg-slate-50" />
+            }
+
+            }
+            <div dialogFooter class="flex justify-end gap-2">
+                <button type="button" (click)="shareDialog.hide()">
+                    Cancel
+                </button>
+
+                <button type="button">
+                    Share
+                </button>
+            </div>
+        </app-dialog>
+        }
     </div>
 
     }

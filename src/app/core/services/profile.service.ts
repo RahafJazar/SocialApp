@@ -27,7 +27,9 @@ export class ProfileService {
   }
 
   followUser(userId: string): Observable<FollowDataResponse> {
-    return this.httpClient.put<FollowDataResponse>(`${environment.base_url}/users/${userId}/follow`, {})
+    return this.httpClient.put<FollowDataResponse>(`${environment.base_url}/users/${userId}/follow`, {}, {
+      context: new HttpContext().set(SKIP_GLOBAL_LOADING, true)
+    })
   }
 
   getUserProfile(userId: string): Observable<UserDataResponse> {
