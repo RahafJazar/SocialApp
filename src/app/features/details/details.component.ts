@@ -39,7 +39,13 @@ export class DetailsComponent implements OnInit {
     this.postsService.getsinglePost(id).subscribe({
       next: (resp) => {
         if (resp.success) {
-          this.postData = resp.data.post;
+          if (resp.data.post.isShare) {
+            this.postData = resp.data.post.sharedPost;
+          } else {
+            this.postData = resp.data.post;
+          }
+
+          console.log('post details :', this.postData)
         }
 
       }

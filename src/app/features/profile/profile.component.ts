@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit {
       next: (data: FollowDataResponse) => {
         if (data.success) {
           console.log(`profile data : \n`, data)
-          this.suggestions = data.data.suggestions
+          this.suggestions = data.data.suggestions!
         }
       }
     })

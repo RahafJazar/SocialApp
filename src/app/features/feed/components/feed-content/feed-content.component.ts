@@ -1,3 +1,5 @@
+import { FollowDataResponse } from './../../../../core/models/follow-data-response.interface';
+import { Page } from './../../../../../../node_modules/ngx-pagination/lib/pagination-controls.directive.d';
 import { UserInfo } from './../../../../core/models/user-data.interface';
 import { Component, inject, OnInit } from '@angular/core';
 import { PostsService } from '../../../../core/services/posts.service';
@@ -8,10 +10,12 @@ import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
 
+import { Bookmark } from '../../../../core/models/bookmarks-data.interface';
+import { InfiniteScrollDirective } from '../../../../core/directives/infinite-scroll.directive';
 
 @Component({
   selector: 'app-feed-content',
-  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink, DatePipe, TimeAgoPipe],
+  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink, DatePipe, TimeAgoPipe, InfiniteScrollDirective],
   templateUrl: './feed-content.component.html',
   styleUrl: './feed-content.component.css',
 })
@@ -27,12 +31,14 @@ export class FeedContentComponent implements OnInit {
   contentControl: FormControl = new FormControl('', []);
   privacyControl: FormControl = new FormControl('public', null);
   showComments: Record<string, boolean> = {};
-
-
-
+  limit: number = 20;
+  page: number = 1;
+  only: string = 'following';
+  hasMore: boolean = true;
+  isLodaing: boolean = false;
   ngOnInit(): void {
     this.getUserData();
-    this.getAllPosts();
+    this.getFeedPosts(this.only, this.limit, this.page);
   }
 
 
@@ -47,7 +53,21 @@ export class FeedContentComponent implements OnInit {
 
     })
   }
+  getFeedPosts(only: string, limit: number, page: number): void {
+    if (!this.hasMore || this.isLodaing) {
+      return
+    }
+    this.isLodaing = true;
+    this.postsService.getHomeFeed(only, limit, page).subscribe((resp) => {
+      if (resp.success) {
+        this.posts = [...this.posts, ...resp.data.posts];
+        this.hasMore = this.posts.length < resp.meta?.pagination.total!;
+        this.page++;
+        this.isLodaing = false;
+      }
 
+    })
+  }
   getUserData() {
     if (localStorage.getItem('userData')) {
       this.userData = JSON.parse(localStorage.getItem('userData')!);

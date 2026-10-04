@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../../../core/services/profile.service';
 import { FollowDataResponse, Suggestion } from '../../../../core/models/follow-data-response.interface';
 import { SlicePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-suggested-friends',
@@ -12,6 +13,7 @@ import { SlicePipe } from '@angular/common';
 export class SuggestedFriendsComponent implements OnInit {
 
   private profileService = inject(ProfileService);
+  private router = inject(Router);
   suggestions: Suggestion[] = [];
   visibleCounts: number = 3;
 
@@ -24,7 +26,7 @@ export class SuggestedFriendsComponent implements OnInit {
       next: (data: FollowDataResponse) => {
         if (data.success) {
           console.log(`profile data : \n`, data)
-          this.suggestions = data.data.suggestions
+          this.suggestions = data.data.suggestions!
         }
       }
     })
@@ -39,5 +41,9 @@ export class SuggestedFriendsComponent implements OnInit {
       this.visibleCounts += 3;
     }
 
+  }
+
+  ShowAllSuggestions() {
+    this.router.navigate(['/all-suggestions'])
   }
 }

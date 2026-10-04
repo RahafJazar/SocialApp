@@ -1,8 +1,9 @@
+
 export interface PostsDataResponse {
     success: boolean;
     message: string;
     data: Data;
-    meta: Meta;
+    meta?: Meta;
 }
 
 export interface Data {
@@ -15,9 +16,7 @@ export interface Post extends BasePost {
     bookmarked: boolean;
 }
 
-export interface SharedPost extends BasePost {
-    sharedPost?: SharedPost;
-}
+
 
 // ==================== Shared Structure ====================
 
@@ -28,6 +27,7 @@ export interface BasePost {
     user: User;
     likes: string[];
     createdAt: string;
+    sharedPost: BasePost;
     commentsCount: number;
     topComment?: TopComment;
     sharesCount: number;
@@ -69,5 +69,5 @@ export interface Pagination {
     numberOfPages: number;
     limit: number;
     nextPage: number;
-    total: number;
+    total?: number;
 }

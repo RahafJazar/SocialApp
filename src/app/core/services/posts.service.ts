@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { PostMutationDataResponce } from './../models/post-mutation-data.interface';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment, environment as prodEnvironment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { PostsDataResponse } from '../models/posts-data.interface';
-import { Post, PostMutationDataResponce } from '../models/post-mutation-data.interface';
+import { Post } from '../models/post-mutation-data.interface';
 import { PostDetailsDataResponce } from '../../features/details/models/post-details-data.interface';
+import { SKIP_GLOBAL_LOADING } from '../interceptors/loading/http-context-token/loading-context';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +37,9 @@ export class PostsService {
     return this.httpClient.get<PostsDataResponse>(`${environment.base_url}/users/${myId}/posts`)
   }
 
-  getHomeFeed(only: string, limit: number): Observable<Post> {
-    return this.httpClient.get<Post>(``);
+  getHomeFeed(only: string = 'following', limit: number, page: number): Observable<PostsDataResponse> {
+    return this.httpClient.get<PostsDataResponse>(`${environment.base_url}/posts/feed?only=${only}&limit=${limit}&page=${page}`, {
+      context: new HttpContext().set(SKIP_GLOBAL_LOADING, true)
+    });
   }
 }

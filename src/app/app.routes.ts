@@ -12,6 +12,7 @@ import { ChangePasswordComponent } from './features/change-password/change-passw
 import { NotFoundComponent } from './features/not-found/not-found.component';
 import { authGuard } from './core/auth/guards/auth-guard';
 import { DetailsComponent } from './features/details/details.component';
+import { AllSiggestedComponent } from './features/feed/components/all-suggested-friends/all-siggested/all-siggested.component';
 
 export const routes: Routes = [
     {
@@ -40,6 +41,7 @@ export const routes: Routes = [
             { path: 'notifications', component: NotificationsComponent },
             { path: 'changePassword', component: ChangePasswordComponent },
             { path: 'details/:id', component: DetailsComponent },
+            { path: 'all-suggestions', component: AllSiggestedComponent },
 
         ]
     },

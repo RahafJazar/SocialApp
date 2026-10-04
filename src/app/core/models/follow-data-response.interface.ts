@@ -6,7 +6,9 @@ export interface FollowDataResponse {
 }
 
 export interface SuggestionData {
-    suggestions: Suggestion[]
+    suggestions?: Suggestion[];
+    following?: boolean;
+    followersCount?: number;
 }
 
 export interface Suggestion {

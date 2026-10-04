@@ -7,9 +7,9 @@ import { ProfileComponent } from '../../features/profile/profile.component';
 })
 export class SearchPipe implements PipeTransform {
 
-  transform(value: Product[], term: string): Product[] {
+  transform(value: any[], term: string, searchElem: string): any[] {
     return value.filter((product) => {
-      return product.title.toLowerCase().includes(term.toLowerCase());
+      return product[searchElem].toLowerCase().includes(term.toLowerCase());
     })
   }
   //[{},{},{},{}]
