@@ -1,7 +1,8 @@
 <aside class="hidden h-fit space-y-3 xl:sticky xl:top-[84px] xl:block">
     <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-        <button
-            class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition bg-[#e7f3ff] text-[#1877f2]"><svg
+        <button (click)="selectFeed('following') "
+            class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition  cursor-pointer "
+            [class]="selectedFeed === 'following' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'text-slate-700 hover:bg-slate-100'"><svg
                 xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-newspaper" aria-hidden="true">
@@ -13,8 +14,9 @@
             </svg>
             Feed
         </button>
-        <button
-            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition text-slate-700 hover:bg-slate-100"><svg
+        <button (click)="selectFeed('me') "
+            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition cursor-pointer "
+            [class]="selectedFeed === 'me' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'text-slate-700 hover:bg-slate-100'"><svg
                 xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-sparkles" aria-hidden="true">
@@ -27,8 +29,9 @@
             </svg>
             My Posts
         </button>
-        <button
-            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition text-slate-700 hover:bg-slate-100"><svg
+        <button (click)="selectFeed('all') "
+            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition  cursor-pointer  "
+            [class]="selectedFeed === 'all' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'text-slate-700 hover:bg-slate-100'"><svg
                 xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-earth" aria-hidden="true">
@@ -40,8 +43,9 @@
             </svg>
             Community
         </button>
-        <button
-            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition text-slate-700 hover:bg-slate-100"><svg
+        <button (click)="showSavedPosts()"
+            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition text-slate-700 hover:bg-slate-100"
+            [class]="selectedFeed === 'saved' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'text-slate-700 hover:bg-slate-100'"><svg
                 xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-bookmark" aria-hidden="true">

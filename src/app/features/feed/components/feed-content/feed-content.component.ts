@@ -1,28 +1,27 @@
-import { FollowDataResponse } from './../../../../core/models/follow-data-response.interface';
-import { Page } from './../../../../../../node_modules/ngx-pagination/lib/pagination-controls.directive.d';
-import { UserInfo } from './../../../../core/models/user-data.interface';
-import { Component, inject, OnInit } from '@angular/core';
-import { PostsService } from '../../../../core/services/posts.service';
-import { BasePost, Data, Post, PostsDataResponse, User } from '../../../../core/models/posts-data.interface';
-import { Form, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { PostCommentsComponent } from './components/post-comments/post-comments.component';
-import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
+import { Component, inject, OnInit, model, ValueProvider } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
-import { Bookmark } from '../../../../core/models/bookmarks-data.interface';
 import { InfiniteScrollDirective } from '../../../../core/directives/infinite-scroll.directive';
-import { PopoverComponent } from '../../../../shared/ui/popover/popover.component';
+import { BasePost, PostsDataResponse } from '../../../../core/models/posts-data.interface';
+import { PostsService } from '../../../../core/services/posts.service';
+import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
 import { DialogComponent } from '../../../../shared/ui/dialog/dialog.component';
+import { UserInfo } from './../../../../core/models/user-data.interface';
+import { PostCommentsComponent } from './components/post-comments/post-comments.component';
+import { finalize, forkJoin } from 'rxjs';
+import { ProfileService } from '../../../../core/services/profile.service';
 
 @Component({
   selector: 'app-feed-content',
-  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink, DatePipe, TimeAgoPipe, InfiniteScrollDirective, DialogComponent, DialogModule],
+  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink, DatePipe, TimeAgoPipe, InfiniteScrollDirective, DialogComponent, DialogModule, FormsModule],
   templateUrl: './feed-content.component.html',
   styleUrl: './feed-content.component.css',
 })
 export class FeedContentComponent implements OnInit {
   private readonly postsService = inject(PostsService);
+  private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);
   userId: string = '';
   selectedFile!: File;
@@ -40,7 +39,8 @@ export class FeedContentComponent implements OnInit {
   isLodaing: boolean = false;
 
   // ضيفي DialogModule إلى imports
-  visible = false;
+  shareDialogvisible: boolean = false;
+  selectedPost: BasePost | null = null;
 
 
   ngOnInit(): void {
@@ -73,6 +73,22 @@ export class FeedContentComponent implements OnInit {
         this.isLodaing = false;
       }
 
+    })
+  }
+  getBookmarks(): void {
+    if (!this.hasMore || this.isLodaing) {
+      return
+    }
+    this.isLodaing = true;
+    this.profileService.getBookmarks().subscribe({
+      next: (resp) => {
+        if (resp.success) {
+          this.posts = [...this.posts, ...resp.data.bookmarks];
+          this.hasMore = this.posts.length < resp.meta?.pagination.total!;
+          this.page++;
+          this.isLodaing = false;
+        }
+      }
     })
   }
   getUserData() {
@@ -164,7 +180,131 @@ export class FeedContentComponent implements OnInit {
   }
 
   //show user profile
-  showProfile(userId: string): void {
+  showProfile(userId: string | undefined): void {
     this.router.navigate(['/profile', userId])
+  }
+
+  //select post you want to share 
+  openShare(post: BasePost): void {
+    this.selectedPost = post;
+    this.shareDialogvisible = true;
+    if (!post) return;
+  }
+
+  sharePost(postId: string, textarea: HTMLTextAreaElement): void {
+    const payload = {
+      body: textarea.value.trim()
+    };
+    this.postsService.sharePost(postId, payload).subscribe(
+      {
+        next: (resp) => {
+          if (resp.success) {
+            this.shareDialogvisible = false;
+            this.selectedPost = null;
+            this.refreshPosts();
+            textarea.value = ''
+          }
+        }
+      }
+    )
+  }
+
+  // ==========================
+  //  REFRESH POSTS
+  // ==========================
+
+  refreshPosts(): void {
+    if (this.isLodaing) return;
+
+    // page هو رقم الصفحة القادمة، لذلك آخر صفحة محملة هي page - 1
+    const lastPage = Math.max(1, this.page - 1);
+
+    const requests = Array.from(
+      { length: lastPage },
+      (_, index) =>
+        this.postsService.getHomeFeed(
+          this.only,
+          this.limit,
+          index + 1
+        )
+    );
+
+    this.isLodaing = true;
+
+    forkJoin(requests)
+      .pipe(
+        finalize(() => {
+          this.isLodaing = false;
+        })
+      )
+      .subscribe({
+        next: (responses) => {
+          if (responses.some(response => !response.success)) return;
+
+          const allPosts = responses.flatMap(
+            response => response.data.posts
+          );
+
+          this.posts = Array.from(
+            new Map(
+              allPosts.map(post => [post._id, post])
+            ).values()
+          );
+
+          const lastResponse = responses[responses.length - 1];
+          const total = lastResponse.meta?.pagination?.total;
+
+          this.page = lastPage + 1;
+
+          this.hasMore =
+            total != null
+              ? allPosts.length < total
+              : lastResponse.data.posts.length === this.limit;
+        },
+
+        error: (error) => {
+          console.error('Failed to refresh posts:', error);
+        }
+      });
+  }
+  // ==========================
+  //  Like Posts 
+  // ==========================
+  likePost(post: BasePost): void {
+    this.postsService.likePost(post._id).subscribe({
+      next: (resp) => {
+        if (resp.success) {
+          post.likesCount = resp.data.likesCount;
+
+          // احذفي المستخدم أولًا لتجنب التكرار
+          const likes = (post.likes ?? []).filter(
+            id => id !== this.userId
+          );
+
+          post.likes = resp.data.liked
+            ? [...likes, this.userId]
+            : likes;
+
+        }
+      }
+    })
+  }
+
+  changeFeed(only: 'following' | 'me' | 'all' | 'saved'): void {
+    if (this.only === only || this.isLodaing) return;
+
+    this.only = only;
+    this.posts = [];
+    this.page = 1;
+    this.hasMore = true;
+
+
+
+    if (only === 'saved') {
+      this.getBookmarks();
+    } else {
+      this.getFeedPosts(this.only, this.limit, this.page);
+    }
+
   }
 }

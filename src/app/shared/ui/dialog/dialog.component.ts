@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
@@ -10,13 +10,16 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrl: './dialog.component.css',
 })
 export class DialogComponent {
-  visible: boolean = false;
+  @Input() visible = false;
+  @Output() visibleChange = new EventEmitter<boolean>();
   @Input() title: string = '';
   @Input() width: string = '25rem'
   show() {
     this.visible = true;
+    this.visibleChange.emit(true);
   }
   hide() {
     this.visible = false;
+    this.visibleChange.emit(false)
   }
 }

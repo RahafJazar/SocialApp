@@ -71,3 +71,13 @@ export interface Pagination {
     nextPage: number;
     total?: number;
 }
+
+// ==================== Liked Posts Response ====================
+export interface LikePostResponse {
+    success: boolean;
+    message: string;
+    data: {
+        liked: boolean;
+        likesCount: number;
+    };
+}

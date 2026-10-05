@@ -6,68 +6,66 @@ import { NotificationType } from '../../core/enums/notification-type.enum';
 import { TimeAgoPipe } from '../../shared/pipes/time-ago-pipe';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-notifications',
-  imports: [NgxPaginationModule, TimeAgoPipe],
-  templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.css',
+    selector: 'app-notifications',
+    imports: [NgxPaginationModule, TimeAgoPipe],
+    templateUrl: './notifications.component.html',
+    styleUrl: './notifications.component.css',
 })
 export class NotificationsComponent implements OnInit {
-  private profileService = inject(ProfileService);
-  private router = inject(Router);
-  limit: number = 2;
-  unread: boolean = false;
-  page: number = 1;
-  notifications: Notification[] = [];
-  NotificationType = NotificationType;
-  selectedNotification: Notification | undefined;
+    private profileService = inject(ProfileService);
+    private router = inject(Router);
+    limit: number = 2;
+    unread: boolean = false;
+    page: number = 1;
+    notifications: Notification[] = [];
+    NotificationType = NotificationType;
+    selectedNotification: Notification | undefined;
 
-  itemsPer_Page: WritableSignal<number> = signal<number>(2);
-  current_page: WritableSignal<number> = signal<number>(1);
-  total_items: WritableSignal<number> = signal<number>(0);
+    itemsPer_Page: WritableSignal<number> = signal<number>(2);
+    current_page: WritableSignal<number> = signal<number>(1);
+    total_items: WritableSignal<number> = signal<number>(0);
 
 
-  ngOnInit(): void {
-    this.getNotifications()
-  }
-
-  getNotifications(): void {
-    this.profileService.getNotifications(this.limit, this.page, this.unread).subscribe({
-      next: (resp) => {
-        if (resp.success) {
-          console.log("notifictions : \n", resp);
-          this.notifications = [...this.notifications,
-
-          ...resp.data.notifications];
-
-        }
-      }
-    })
-  }
-  showNotification(id: string) {
-    console.log('selected')
-    this.selectedNotification = this.notifications.find((notification) => {
-      return notification._id === id;
-    })
-    if (this.selectedNotification) {
-      this.selectedNotification.isRead = true;
+    ngOnInit(): void {
+        this.getNotifications()
     }
-  }
 
-  loadMore(): void {
+    getNotifications(): void {
+        this.profileService.getNotifications(this.limit, this.page, this.unread).subscribe({
+            next: (resp) => {
+                if (resp.success) {
+                    console.log("notifictions : \n", resp);
+                    this.notifications = [...this.notifications, ...resp.data.notifications];
 
-    this.page++;
-    this.getNotifications();
-  }
+                }
+            }
+        })
+    }
+    showNotification(id: string) {
+        console.log('selected')
+        this.selectedNotification = this.notifications.find((notification) => {
+            return notification._id === id;
+        })
+        if (this.selectedNotification) {
+            this.selectedNotification.isRead = true;
+        }
+    }
 
-  markAllAsRead() {
-    this.notifications.map(n => {
-      n.isRead = true;
-    })
-  }
+    loadMore(): void {
 
-  viewPost(postId: string): void {
-    this.router.navigate(['/details', postId])
-  }
+        this.page++;
+        this.getNotifications();
+    }
+
+    markAllAsRead() {
+        this.notifications.map(n => {
+            n.isRead = true;
+        })
+    }
+
+    viewPost(postId: string): void {
+        this.router.navigate(['/details', postId])
+    }
 }
 
 

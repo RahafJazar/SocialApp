@@ -37,7 +37,9 @@ export class ProfileService {
   }
 
   getBookmarks(): Observable<BookmarksDataResponse> {
-    return this.httpClient.get<BookmarksDataResponse>(`${environment.base_url}/users/bookmarks`)
+    return this.httpClient.get<BookmarksDataResponse>(`${environment.base_url}/users/bookmarks`, {
+      context: new HttpContext().set(SKIP_GLOBAL_LOADING, true)
+    })
   }
   getNotifications(limit: number = 10, page: number = 1, unread: boolean = false): Observable<NotificationsDataResponse> {
     return this.httpClient.get<NotificationsDataResponse>(`${environment.base_url}/notifications?unread=${unread}&page=${page}&limit=${limit}`)

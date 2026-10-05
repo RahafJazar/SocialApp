@@ -2,9 +2,9 @@
     <div class="container 2xl:max-w-8xl ">
         <div class="grid gap-4 xl:grid-cols-[240px_minmax(0,1fr)_300px]">
             <!---left--->
-            <app-sidebar-navigation></app-sidebar-navigation>
+            <app-sidebar-navigation (feedChanged)="feed.changeFeed($event)"></app-sidebar-navigation>
             <!---content--->
-            <app-feed-content></app-feed-content>
+            <app-feed-content #feed></app-feed-content>
             <!---right--->
             <app-suggested-friends></app-suggested-friends>
         </div>

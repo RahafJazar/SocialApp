@@ -1,6 +1,7 @@
 <div class="flex justify-center">
 
-    <p-dialog [(visible)]="visible" [modal]="true" [header]="title" [style]="{ width: width, maxWidth: '95vw' }">
+    <p-dialog [visible]="visible" (visibleChange)="visible = $event; visibleChange.emit($event)" [modal]="true"
+        [header]="title" [style]="{ width: width, maxWidth: '95vw'   }" styleClass="bgColorChange">
         <!----محتوى الديالوج-->
         <ng-content></ng-content>
 

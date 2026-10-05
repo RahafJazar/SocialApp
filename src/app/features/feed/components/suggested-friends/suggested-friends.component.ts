@@ -21,6 +21,8 @@ export class SuggestedFriendsComponent implements OnInit {
   ngOnInit(): void {
     this.getFollowSuggestions();
   }
+
+
   getFollowSuggestions(): void {
     this.profileService.getFollowProfileSuggestions().subscribe({
       next: (data: FollowDataResponse) => {
