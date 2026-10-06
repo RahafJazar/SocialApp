@@ -1,8 +1,9 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar-navigation',
-  imports: [],
+  imports: [TranslatePipe, ],
   templateUrl: './sidebar-navigation.component.html',
   styleUrl: './sidebar-navigation.component.css',
 })

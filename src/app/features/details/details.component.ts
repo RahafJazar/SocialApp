@@ -1,3 +1,5 @@
+import { TimeAgoPipe } from '../../shared/pipes/time-ago-pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, inject, OnInit } from '@angular/core';
 import { PostsService } from '../../core/services/posts.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,7 +9,7 @@ import { ReturnPackComponent } from "../../shared/ui/return-back/return-pack/ret
 
 @Component({
   selector: 'app-details',
-  imports: [ReturnPackComponent],
+  imports: [TimeAgoPipe, TranslatePipe, ReturnPackComponent],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css',
 })

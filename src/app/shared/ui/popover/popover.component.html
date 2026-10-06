@@ -1,6 +1,5 @@
 <div class="flex justify-center">
-    <button type="button" pButton severity="secondary" variant="outlined" (click)="op.toggle($event)">Show
-        Popover</button>
+    <button type="button" pButton severity="secondary" variant="outlined" (click)="op.toggle($event)">{{ 'COMMON.SHOW_POPOVER' | translate }}</button>
     <p-popover #op>
         <ng-content></ng-content>
         <!-- <div class="max-w-72 w-full">

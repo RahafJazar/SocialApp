@@ -8,7 +8,7 @@
             <div class="flex items-center gap-3">
 
                 <h1 class="text-xl font-bold text-slate-900 md:text-2xl">
-                    Notifications
+                    {{ 'NAV.NOTIFICATIONS' | translate }}
                 </h1>
 
                 <span
@@ -24,7 +24,7 @@
 
                 <i class="fa-solid fa-check text-main-color"></i>
 
-                <span>Mark All As Read</span>
+                <span>{{ 'NOTIFICATIONS.MARK_ALL' | translate }}</span>
 
             </button>
 
@@ -42,11 +42,11 @@
                 <div class="border-b border-slate-100 px-5 py-4">
 
                     <h2 class="font-bold text-slate-900">
-                        Recent Notifications
+                        {{ 'NOTIFICATIONS.RECENT' | translate }}
                     </h2>
 
                     <p class="mt-1 text-xs text-slate-500">
-                        Stay updated with your latest activities
+                        {{ 'NOTIFICATIONS.SUBTITLE' | translate }}
                     </p>
 
                 </div>
@@ -86,7 +86,7 @@
                                     {{ notification.actor.name }}
                                 </span>
 
-                                started following you
+                                {{ 'NOTIFICATIONS.FOLLOW' | translate }}
 
                             </p>
 
@@ -141,7 +141,7 @@
                                     {{ notification.actor.name }}
                                 </span>
 
-                                commented on your post
+                                {{ 'NOTIFICATIONS.COMMENT' | translate }}
 
                             </p>
 
@@ -189,9 +189,9 @@
                                 <span class="font-bold">{{ notification.actor.name }}</span>
 
                                 @if (notification.type === NotificationType.like_post) {
-                                liked your post
+                                {{ 'NOTIFICATIONS.LIKE' | translate }}
                                 } @else {
-                                mentioned you
+                                {{ 'NOTIFICATIONS.MENTION' | translate }}
                                 }
                             </p>
 
@@ -212,7 +212,7 @@
                 <button
                     class="w-[80%] mx-auto  my-4 block rounded-xl border  border-taupe-600/30 outline-0 py-3 cursor-pointer hover:bg-dark-soft/70 hover:text-white"
                     (click)="loadMore()">
-                    Load More
+                    {{ 'COMMON.LOAD_MORE' | translate }}
                 </button>
 
             </div>
@@ -241,7 +241,7 @@
                             <h2 class="text-base font-bold text-slate-900 sm:text-lg">
 
                                 {{ selectedNotification.actor.name }}
-                                started following you
+                                {{ 'NOTIFICATIONS.FOLLOW' | translate }}
 
                             </h2>
 
@@ -253,20 +253,20 @@
                             <h2 class="text-base font-bold text-slate-900 sm:text-lg">
 
                                 {{ selectedNotification.actor.name }}
-                                commented on your post
+                                {{ 'NOTIFICATIONS.COMMENT' | translate }}
 
                             </h2>
 
                             }
                             @if (selectedNotification.type === NotificationType.like_post) {
                             <h2 class="font-bold text-slate-900">
-                                {{ selectedNotification.actor.name }} liked your post
+                                {{ selectedNotification.actor.name }} {{ 'NOTIFICATIONS.LIKE' | translate }}
                             </h2>
                             }
 
                             @if (selectedNotification.type === NotificationType.mention_user) {
                             <h2 class="font-bold text-slate-900">
-                                {{ selectedNotification.actor.name }} mentioned you
+                                {{ selectedNotification.actor.name }} {{ 'NOTIFICATIONS.MENTION' | translate }}
                             </h2>
                             }
 
@@ -279,7 +279,7 @@
                     </div>
 
 
-                    <button type="button" aria-label="More options"
+                    <button type="button" [attr.aria-label]="'COMMON.MORE_OPTIONS' | translate"
                         class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100">
 
                         <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -349,7 +349,7 @@
 
                     @if (selectedNotification.entity.photo) {
 
-                    <img [src]="selectedNotification.entity.photo" alt="Post image"
+                    <img [src]="selectedNotification.entity.photo" [alt]="'POST.IMAGE' | translate"
                         class="h-44 w-full rounded-lg object-cover sm:h-24 sm:w-28 sm:shrink-0">
 
                     }
@@ -368,11 +368,11 @@
                         <div class="mt-2 flex gap-4 text-xs text-slate-400">
 
                             <span>
-                                {{ selectedNotification.entity.likesCount }} likes
+                                {{ 'POST.LIKES' | translate: {count: selectedNotification.entity.likesCount} }}
                             </span>
 
                             <span>
-                                {{ selectedNotification.entity.commentsCount }} comments
+                                {{ 'POST.COMMENTS_COUNT' | translate: {count: selectedNotification.entity.commentsCount} }}
                             </span>
 
                         </div>
@@ -387,9 +387,9 @@
                     <button type="button" (click)="viewPost(selectedNotification.entity._id)"
                         class="rounded-xl bg-main-color px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90">
 
-                        View Post
+                        {{ 'POST.VIEW' | translate }}
 
-                        <i class="fa-solid fa-arrow-right ml-2"></i>
+                        <i class="fa-solid fa-arrow-right rtl:rotate-180 ms-2"></i>
 
                     </button>
 

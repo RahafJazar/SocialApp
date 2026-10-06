@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, inject, OnInit } from '@angular/core';
 import { ProfileService } from '../../../../core/services/profile.service';
 import { FollowDataResponse, Suggestion } from '../../../../core/models/follow-data-response.interface';
@@ -6,7 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-suggested-friends',
-  imports: [SlicePipe, RouterLink],
+  imports: [TranslatePipe, SlicePipe, RouterLink],
   templateUrl: './suggested-friends.component.html',
   styleUrl: './suggested-friends.component.css',
 })

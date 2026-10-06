@@ -1,3 +1,5 @@
+import { BtnLanguageComponent } from '../../shared/ui/btn-language/btn-language.component';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/services/auth.service';
@@ -8,7 +10,7 @@ import { Subscribable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive],
+  imports: [BtnLanguageComponent, TranslatePipe, ReactiveFormsModule, RouterLink, RouterLinkActive],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -72,9 +74,11 @@ export class RegisterComponent {
   */
 
   submitForm(): void {
+    if (this.loading) return;
+    this.errorMsg = "";
 
     if (this.registerForm.valid) {
-      console.log(this.registerForm);
+
       this.loading = true
       //send data
       //cancel previous subscription 
@@ -84,7 +88,6 @@ export class RegisterComponent {
         {
           next: (resp) => {
             if (resp) {
-              console.log(resp);
 
               //navigate  to login
               setTimeout(() => {
@@ -95,9 +98,9 @@ export class RegisterComponent {
           }
           ,
           error: (err: HttpErrorResponse) => {
-            console.log(err.error.message);
+
             //show errors 
-            this.errorMsg = err.error.message;
+            this.errorMsg = err.status === 0 ? 'ERRORS.NETWORK' : err.status === 409 ? 'ERRORS.CONFLICT' : 'AUTH.REGISTER.ERROR';
             this.loading = false;
           },
           complete: () => {

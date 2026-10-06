@@ -15,23 +15,23 @@
 
                         <select class="border-none bg-transparent cursor-pointer ring-0 py-0 px-2 text-xs"
                             [formControl]="privacyControl">
-                            <option value="public">public</option>
-                            <option value="following">followers</option>
-                            <option value="only_me">only me</option>
+                            <option value="public">{{ 'POST.PUBLIC' | translate }}</option>
+                            <option value="following">{{ 'POST.FOLLOWERS' | translate }}</option>
+                            <option value="only_me">{{ 'POST.ONLY_ME' | translate }}</option>
                         </select>
                     </div>
                 </div>
             </div>
 
             <div class="mb-4">
-                <textarea [formControl]="contentControl"
+                <textarea dir="auto" [formControl]="contentControl"
                     class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-[15px] text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-50 focus:border-blue-300 transition-all resize-y min-h-30"
-                    placeholder="What's on your mind...?" aria-label="Create a new post"></textarea>
+                    [placeholder]="'POST.COMPOSE' | translate" [attr.aria-label]="'POST.CREATE' | translate"></textarea>
             </div>
 
             @if (postImgUrl) {
             <div class="mb-4 relative ">
-                <img class="max-h-60 w-full rounded-lg object-cover" [src]="postImgUrl" alt="create post img" />
+                <img class="max-h-60 w-full rounded-lg object-cover" [src]="postImgUrl" [alt]="'POST.PREVIEW' | translate" />
                 <span class="text-3xl absolute top-0 end-5 text-black/50 cursor-pointer " (click)="removeFile()">
                     <i class="fa-solid fa-x"></i>
                 </span>
@@ -47,12 +47,12 @@
                     class="flex cursor-pointer items-center gap-2 text-slate-600 hover:bg-slate-50 px-2 py-1.5 rounded-lg transition-colors group">
                     <i
                         class="fa-regular fa-image text-[#22c55e] text-[1.1rem] group-hover:scale-110 transition-transform"></i>
-                    <span class="text-[14px] font-semibold text-slate-600">Photo/video</span>
+                    <span class="text-[14px] font-semibold text-slate-600">{{ 'POST.PHOTO_VIDEO' | translate }}</span>
                 </label>
 
                 <button
                     class="cursor-pointer bg-blue-500 text-white px-5 py-2 rounded-lg font-bold text-[14px] flex items-center gap-2 focus:ring-4 focus:ring-blue-200 outline-none">
-                    Post
+                    {{ 'POST.PUBLISH' | translate }}
                     <i class="fa-regular fa-paper-plane text-sm"></i>
                 </button>
             </div>
@@ -87,7 +87,7 @@
                     <div class="flex items-center gap-2 text-xs text-slate-500">
                         <span>{{ post.createdAt | timeAgo }}</span>
                         <span>·</span>
-                        <span>{{ post.privacy }}</span>
+                        <span>{{ ('PRIVACY.' + post.privacy) | translate }}</span>
                     </div>
                 </div>
             </div>
@@ -105,22 +105,22 @@
 
                 <!-- Dropdown menu -->
                 <div id="dropdownDots"
-                    class="z-30 hidden group-hover:block absolute right-full top-[50%] bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+                    class="z-30 hidden group-hover:block absolute end-full top-[50%] bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
                     <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownMenuIconButton">
                         <li>
                             <button
                                 class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
-                                Save post
+                                {{ 'POST.SAVE' | translate }}
                             </button>
 
                             @if(post.user._id=== userId){
                             <button
                                 class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
-                                Edit post
+                                {{ 'POST.EDIT' | translate }}
                             </button>
                             <button (click)="deletePostItem(post._id )"
                                 class="inline-flex text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
-                                Delete post
+                                {{ 'POST.DELETE' | translate }}
                             </button>
                             }
 
@@ -139,7 +139,7 @@
                 <path
                     d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z">
                 </path>
-            </svg>Saved
+            </svg>{{ 'POST.SAVED' | translate }}
         </div>
         }
 
@@ -147,7 +147,7 @@
         @if (post.sharedPost) {
         <div class="px-4 pb-2 flex items-center gap-2 text-xs text-slate-500">
             <i class="fa-solid fa-retweet"></i>
-            <span>Shared a post</span>
+            <span>{{ 'POST.SHARED' | translate }}</span>
         </div>
         }
 
@@ -155,7 +155,7 @@
         <!-- CURRENT POST CONTENT -->
         @if (post.body) {
         <div class="px-4 py-3">
-            <p class="text-[15px] text-slate-800 whitespace-pre-line break-words">
+            <p dir="auto" class="text-[15px] text-slate-800 whitespace-pre-line break-words">
                 {{ post.body }}
             </p>
         </div>
@@ -183,13 +183,12 @@
                         <div class="flex items-center gap-2 text-xs text-slate-500">
                             <span>{{ original.createdAt | timeAgo }}</span>
                             <span>·</span>
-                            <span>{{ original.privacy }}</span>
+                            <span>{{ ('PRIVACY.' + original.privacy) | translate }}</span>
                         </div>
                     </div>
 
-                    <button [routerLink]="['/details',post._id]" class=" ml-auto inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold
-                        text-[#1877f2] hover:bg-[#e7f3ff]">Original
-                        Post<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+                    <button [routerLink]="['/details',post._id]" class=" ms-auto inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold
+                        text-[#1877f2] hover:bg-[#e7f3ff]">{{ 'POST.ORIGINAL' | translate }}<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
                             <path d="M15 3h6v6"></path>
@@ -203,7 +202,7 @@
 
             <!-- Original post body -->
             @if (original.body) {
-            <p class="px-3 pb-3 text-sm text-slate-700 whitespace-pre-line break-words">
+            <p dir="auto" class="px-3 pb-3 text-sm text-slate-700 whitespace-pre-line break-words">
                 {{ original.body }}
             </p>
             }
@@ -211,14 +210,14 @@
 
             <!-- Original post image -->
             @if (original.image) {
-            <img [src]="original.image" alt="Original post image" class="w-full max-h-96 object-contain bg-slate-50" />
+            <img [src]="original.image" [alt]="'POST.ORIGINAL_IMAGE' | translate" class="w-full max-h-96 object-contain bg-slate-50" />
             }
 
 
             <!-- Original post attribution -->
             <div class="px-3 py-2 bg-slate-50 border-t border-slate-100">
                 <span class="text-xs text-slate-500">
-                    Original post by
+                    {{ 'POST.ORIGINAL_BY' | translate }}
                     <span class="font-semibold text-slate-700">
                         {{ original.user.name }}
                     </span>
@@ -231,7 +230,7 @@
 
         <!-- NORMAL POST IMAGE -->
         @if (post.image) {
-        <img [src]="post.image" alt="Post image" class="w-full max-h-[450px] object-contain bg-slate-50" />
+        <img [src]="post.image" [alt]="'POST.IMAGE' | translate" class="w-full max-h-[450px] object-contain bg-slate-50" />
         }
 
         }
@@ -246,23 +245,23 @@
                     <i class="fa-solid fa-thumbs-up text-[10px]"></i>
                 </span>
 
-                <span>{{ post.likesCount }} likes</span>
+                <span>{{ 'POST.LIKES' | translate: {count: post.likesCount} }}</span>
             </div>
 
             <div class="flex items-center gap-3">
                 <span (click)="showComments[post._id] = true" class="cursor-pointer hover:underline">
-                    {{ post.commentsCount }} comments
+                    {{ 'POST.COMMENTS_COUNT' | translate: {count: post.commentsCount} }}
                 </span>
 
                 <span class="cursor-pointer hover:underline">
-                    {{ post.sharesCount }} shares
+                    {{ 'POST.SHARES' | translate: {count: post.sharesCount} }}
                 </span>
                 <div class="flex items-center gap-3">
-                    <span class="cursor-pointer hover:underline">{{post.sharesCount}} shares</span>
-                    <span class="cursor-pointer hover:underline">{{post.commentsCount}} comments</span>
+                    <span class="cursor-pointer hover:underline">{{ 'POST.SHARES' | translate: {count: post.sharesCount} }}</span>
+                    <span class="cursor-pointer hover:underline">{{ 'POST.COMMENTS_COUNT' | translate: {count: post.commentsCount} }}</span>
                     <button [routerLink]="['/details',post._id]"
                         class="font-semibold cursor-pointer text-blue-600 hover:underline">
-                        View details
+                        {{ 'POST.DETAILS' | translate }}
                     </button>
                 </div>
             </div>
@@ -280,7 +279,7 @@
                text-slate-600 hover:bg-slate-100" (click)="likePost(post)">
                     <i class=" fa-thumbs-up text-lg" [class.fa-solid]="post.likes?.includes(userId)"
                         [class.fa-regular]="!post.likes?.includes(userId)"></i>
-                    Like
+                    {{ 'POST.LIKE' | translate }}
 
                 </button>
 
@@ -289,7 +288,7 @@
                text-slate-600 hover:bg-slate-100">
 
                     <i class="fa-regular fa-comment text-lg"></i>
-                    Comment
+                    {{ 'POST.COMMENT' | translate }}
 
                 </button>
 
@@ -298,7 +297,7 @@
                text-slate-600 hover:bg-slate-100" (click)="openShare(post)">
 
                     <i class="fa-solid fa-share text-lg"></i>
-                    Share
+                    {{ 'POST.SHARE' | translate }}
 
                 </button>
 
@@ -321,9 +320,9 @@
     <!---Share-->
     @defer (when shareDialogvisible) {
     @if (selectedPost ; as post) {
-    <app-dialog #shareDialog [(visible)]="shareDialogvisible" [title]="'Share Post'" [width]="'60rem'">
+    <app-dialog #shareDialog [(visible)]="shareDialogvisible" [title]="'POST.SHARE_TITLE' | translate" [width]="'60rem'">
 
-        <textarea #shareText placeholder="Write something..."
+        <textarea dir="auto" #shareText [placeholder]="'POST.WRITE' | translate"
             class="w-full rounded-lg border border-b-body-subtle outline-0 p-3"></textarea>
         <!-- POST HEADER -->
         <div class="flex items-start justify-between p-4 pb-2">
@@ -341,7 +340,7 @@
                     <div class="flex items-center gap-2 text-xs text-slate-500">
                         <span>{{ post.createdAt | timeAgo }}</span>
                         <span>·</span>
-                        <span>{{ post.privacy }}</span>
+                        <span>{{ ('PRIVACY.' + post.privacy) | translate }}</span>
                     </div>
                 </div>
             </div>
@@ -356,7 +355,7 @@
         <!-- CURRENT POST CONTENT -->
         @if (post.body) {
         <div class="px-4 py-3">
-            <p class="text-[15px] text-slate-800 whitespace-pre-line break-words">
+            <p dir="auto" class="text-[15px] text-slate-800 whitespace-pre-line break-words">
                 {{ post.body }}
             </p>
         </div>
@@ -367,18 +366,18 @@
 
         <!-- NORMAL POST IMAGE -->
         @if (post.image) {
-        <img [src]="post.image" alt="Post image" class="w-full max-h-[450px] object-contain bg-slate-50" />
+        <img [src]="post.image" [alt]="'POST.IMAGE' | translate" class="w-full max-h-[450px] object-contain bg-slate-50" />
         }
 
         <div dialogFooter class="flex justify-end gap-2">
             <button type="button" class=" px-3 py-2 bg-gray-500 text-white hover:bg-gray-600 rounded-2xl"
                 (click)="shareDialog.hide()">
-                Cancel
+                {{ 'COMMON.CANCEL' | translate }}
             </button>
 
             <button type="button" class="px-3 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded-2xl"
                 (click)="sharePost(post._id,shareText)">
-                Share
+                {{ 'POST.SHARE' | translate }}
             </button>
         </div>
 
@@ -397,9 +396,9 @@
     <div appInfiniteScroll (loadMore)="getFeedPosts(only , limit , page)" class="h-5"></div>
     }
     @else{
-    <div class=" w-60 m-auto text-md font-bold text-mist-600/50">You have reached the end </div>
+    <div class=" w-60 m-auto text-md font-bold text-mist-600/50">{{ 'COMMON.END' | translate }} </div>
     }
     @if(isLodaing){
-    <div class="py-4">loading ....</div>
+    <div class="py-4">{{ 'COMMON.LOADING' | translate }}</div>
     }
 </section>

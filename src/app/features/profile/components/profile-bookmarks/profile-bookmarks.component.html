@@ -12,7 +12,7 @@
                     <span>&middot;</span>
                     <span class="hover:underline cursor-pointer">{{bookmark.createdAt | timeAgo}}</span>
                     <span>&middot;</span>
-                    <span class="border-none bg-transparent ring-0 py-0 px-2 text-xs">{{bookmark.privacy}}</span>
+                    <span class="border-none bg-transparent ring-0 py-0 px-2 text-xs">{{ ('PRIVACY.' + bookmark.privacy) | translate }}</span>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                     <li>
                         <button type="button"
                             class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
-                            Remove bookmark
+                            {{ 'POST.REMOVE_BOOKMARK' | translate }}
                         </button>
                     </li>
                 </ul>
@@ -47,7 +47,7 @@
         }
 
         @if (bookmark.image) {
-        <img [src]="bookmark.image" class="w-full max-h-90 object-cover rounded shadow mt-2" alt="post photo" />
+        <img [src]="bookmark.image" class="w-full max-h-90 object-cover rounded shadow mt-2" [alt]="'POST.IMAGE' | translate" />
         }
     </div>
 
@@ -56,14 +56,14 @@
             <div class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-2xs">
                 <i class="fa-solid fa-thumbs-up"></i>
             </div>
-            <span>{{bookmark.likesCount}} likes</span>
+            <span>{{ 'POST.LIKES' | translate: {count: bookmark.likesCount} }}</span>
         </div>
         <div class="flex items-center gap-3">
-            <span class="cursor-pointer hover:underline">{{bookmark.sharesCount}} shares</span>
-            <span class="cursor-pointer hover:underline">{{bookmark.commentsCount}} comments</span>
+            <span class="cursor-pointer hover:underline">{{ 'POST.SHARES' | translate: {count: bookmark.sharesCount} }}</span>
+            <span class="cursor-pointer hover:underline">{{ 'POST.COMMENTS_COUNT' | translate: {count: bookmark.commentsCount} }}</span>
             <button [routerLink]="['/details', bookmark._id]"
                 class="font-semibold cursor-pointer text-blue-600 hover:underline">
-                View details
+                {{ 'POST.DETAILS' | translate }}
             </button>
         </div>
     </div>
@@ -74,17 +74,17 @@
         <button type="button"
             class="flex-1 cursor-pointer flex items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors">
             <i class="fa-regular fa-thumbs-up text-lg"></i>
-            Like
+            {{ 'POST.LIKE' | translate }}
         </button>
         <button #commentBtn type="button"
             class="flex-1 flex cursor-pointer items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors">
             <i class="fa-regular fa-message text-lg"></i>
-            Comment
+            {{ 'POST.COMMENT' | translate }}
         </button>
         <button type="button"
             class="flex-1 flex cursor-pointer items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-lg transition-colors">
             <i class="fa-solid fa-share text-lg"></i>
-            Share
+            {{ 'POST.SHARE' | translate }}
         </button>
     </div>
 

@@ -1,7 +1,7 @@
 <aside class="hidden h-fit space-y-3 xl:sticky xl:top-[84px] xl:block">
     <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
         <button (click)="selectFeed('following') "
-            class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition  cursor-pointer "
+            class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-start text-sm font-bold transition  cursor-pointer "
             [class]="selectedFeed === 'following' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'text-slate-700 hover:bg-slate-100'"><svg
                 xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -12,10 +12,10 @@
                 </path>
                 <rect width="8" height="4" x="10" y="6" rx="1"></rect>
             </svg>
-            Feed
+            {{ 'NAV.FEED' | translate }}
         </button>
         <button (click)="selectFeed('me') "
-            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition cursor-pointer "
+            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-start text-sm font-bold transition cursor-pointer "
             [class]="selectedFeed === 'me' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'text-slate-700 hover:bg-slate-100'"><svg
                 xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -27,10 +27,10 @@
                 <path d="M22 4h-4"></path>
                 <circle cx="4" cy="20" r="2"></circle>
             </svg>
-            My Posts
+            {{ 'NAV.MY_POSTS' | translate }}
         </button>
         <button (click)="selectFeed('all') "
-            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition  cursor-pointer  "
+            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-start text-sm font-bold transition  cursor-pointer  "
             [class]="selectedFeed === 'all' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'text-slate-700 hover:bg-slate-100'"><svg
                 xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -41,10 +41,10 @@
                 <path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"></path>
                 <circle cx="12" cy="12" r="10"></circle>
             </svg>
-            Community
+            {{ 'NAV.COMMUNITY' | translate }}
         </button>
         <button (click)="showSavedPosts()"
-            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition text-slate-700 hover:bg-slate-100"
+            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-start text-sm font-bold transition text-slate-700 hover:bg-slate-100"
             [class]="selectedFeed === 'saved' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'text-slate-700 hover:bg-slate-100'"><svg
                 xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -53,7 +53,7 @@
                     d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z">
                 </path>
             </svg>
-            Saved
+            {{ 'POST.SAVED' | translate }}
         </button>
     </div>
 </aside>

@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Bookmark } from '../../../../core/models/bookmarks-data.interface';
@@ -6,7 +7,7 @@ import { PostCommentsComponent } from '../../../feed/components/feed-content/com
 
 @Component({
   selector: 'app-profile-bookmarks',
-  imports: [TimeAgoPipe, RouterLink, PostCommentsComponent],
+  imports: [TranslatePipe, TimeAgoPipe, RouterLink, PostCommentsComponent],
   templateUrl: './profile-bookmarks.component.html',
   styleUrl: './profile-bookmarks.component.css',
 })

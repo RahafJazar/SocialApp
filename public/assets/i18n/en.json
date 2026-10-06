@@ -1,33 +1,171 @@
 {
-    "BRAND": {
-        "NAME": "Togetherly",
-        "TAGLINE": "Explore the things",
-        "TAGLINE_HIGHLIGHT": "you love."
+  "BRAND": {
+    "NAME": "Togetherly",
+    "TAGLINE": "Explore the things",
+    "TAGLINE_HIGHLIGHT": "you love.",
+    "LOGO": "Togetherly logo"
+  },
+  "AUTH": {
+    "TABS": {
+      "LOGIN": "Login",
+      "REGISTER": "Register"
     },
-    "AUTH": {
-        "TABS": {
-            "LOGIN": "Login",
-            "REGISTER": "Register"
-        },
-        "LOGIN": {
-            "TITLE": "Log In",
-            "SUBTITLE": "Log in and continue your social journey.",
-            "EMAIL_PLACEHOLDER": "Email address",
-            "PASSWORD_PLACEHOLDER": "Password",
-            "SUBMIT": "Log In",
-            "SUBMITTING": "Logging in...",
-            "FORGOT_PASSWORD": "Forgot Password?",
-            "ERROR_FALLBACK": "Unable to log in. Please try again."
-        }
+    "LOGIN": {
+      "TITLE": "Log In",
+      "SUBTITLE": "Log in and continue your social journey.",
+      "EMAIL_PLACEHOLDER": "Email address",
+      "PASSWORD_PLACEHOLDER": "Password",
+      "SUBMIT": "Log In",
+      "SUBMITTING": "Logging in...",
+      "FORGOT_PASSWORD": "Forgot Password?",
+      "ERROR_FALLBACK": "Unable to log in. Please try again."
     },
-    "VALIDATION": {
-        "EMAIL": {
-            "REQUIRED": "Email is required.",
-            "INVALID": "Please enter a valid email address."
-        },
-        "PASSWORD": {
-            "REQUIRED": "Password is required.",
-            "PATTERN": "Password does not meet the required format."
-        }
+    "REGISTER": {
+      "TITLE": "Create a new account",
+      "SUBTITLE": "It is quick and easy.",
+      "SUBMIT": "Create New Account",
+      "NAME": "Full name",
+      "USERNAME": "Username (optional)",
+      "GENDER": "Select gender",
+      "MALE": "Male",
+      "FEMALE": "Female",
+      "DOB": "Date of birth",
+      "CONFIRM": "Confirm password",
+      "ERROR": "Unable to create the account. Please check your details and try again."
     }
+  },
+  "VALIDATION": {
+    "EMAIL": {
+      "REQUIRED": "Email is required.",
+      "INVALID": "Please enter a valid email address."
+    },
+    "PASSWORD": {
+      "REQUIRED": "Password is required.",
+      "PATTERN": "Password does not meet the required format."
+    },
+    "NAME_REQUIRED": "Name is required",
+    "NAME_LENGTH": "Name must be at least 3 characters",
+    "GENDER_REQUIRED": "Gender is required",
+    "DOB_REQUIRED": "DoB is required",
+    "CONFIRM_REQUIRED": "RePassword is required",
+    "CONFIRM_MATCH": "RePassword must match the password"
+  },
+  "COMMON": {
+    "LOADING": "Loading...",
+    "CANCEL": "Cancel",
+    "LOAD_MORE": "Load More",
+    "VIEW_MORE": "View More",
+    "BACK": "Back",
+    "BACK_TO": "Back to {{page}}",
+    "MORE_OPTIONS": "More options",
+    "END": "You have reached the end",
+    "SHOW_POPOVER": "Show Popover"
+  },
+  "NAV": {
+    "FEED": "Feed",
+    "PROFILE": "Profile",
+    "NOTIFICATIONS": "Notifications",
+    "SETTINGS": "Settings",
+    "CHANGE_PASSWORD": "Change Password",
+    "LOGOUT": "Logout",
+    "USER_MENU": "Open user menu",
+    "MAIN_MENU": "Open main menu",
+    "MY_POSTS": "My Posts",
+    "COMMUNITY": "Community"
+  },
+  "POST": {
+    "PUBLIC": "public",
+    "FOLLOWERS": "followers",
+    "ONLY_ME": "only me",
+    "PHOTO_VIDEO": "Photo/video",
+    "PUBLISH": "Post",
+    "SAVE": "Save post",
+    "EDIT": "Edit post",
+    "DELETE": "Delete post",
+    "SAVED": "Saved",
+    "SHARED": "Shared a post",
+    "ORIGINAL": "Original Post",
+    "ORIGINAL_BY": "Original post by",
+    "DETAILS": "View details",
+    "LIKE": "Like",
+    "COMMENT": "Comment",
+    "SHARE": "Share",
+    "SHARE_TITLE": "Share Post",
+    "REMOVE_BOOKMARK": "Remove bookmark",
+    "VIEW": "View Post",
+    "LIKES": "Likes: {{count}}",
+    "COMMENTS_COUNT": "Comments: {{count}}",
+    "SHARES": "Shares: {{count}}",
+    "EMPTY": "No posts found",
+    "COMPOSE": "What's on your mind...?",
+    "WRITE": "Write something...",
+    "CREATE": "Create a new post",
+    "IMAGE": "Post image",
+    "PREVIEW": "Selected image preview",
+    "ORIGINAL_IMAGE": "Original post image"
+  },
+  "COMMENTS": {
+    "TITLE": "Comments",
+    "REPLY": "Reply",
+    "WRITE": "Write a comment..."
+  },
+  "FRIENDS": {
+    "SUGGESTED": "Suggested Friends",
+    "ALL": "All Suggested Friends",
+    "FOLLOW": "Follow",
+    "FOLLOWING_PENDING": "Following...",
+    "FOLLOWERS_COUNT": "Followers: {{count}}",
+    "SEARCH": "Search friends...",
+    "SEARCH_NAME": "Search by name or username..."
+  },
+  "PROFILE": {
+    "POSTS": "Posts",
+    "BOOKMARKS": "Bookmarks",
+    "ABOUT": "About",
+    "GENDER": "Gender",
+    "BIRTHDAY": "Birthday",
+    "JOINED": "Joined",
+    "SUGGESTED": "Suggested",
+    "FOLLOWERS": "Followers",
+    "FOLLOWING": "Following",
+    "SECTIONS": "Profile sections",
+    "UPLOAD": "Upload profile photo",
+    "PHOTO": "Profile photo",
+    "UNKNOWN": "Not specified"
+  },
+  "NOTIFICATIONS": {
+    "MARK_ALL": "Mark All As Read",
+    "RECENT": "Recent Notifications",
+    "SUBTITLE": "Stay updated with your latest activities",
+    "FOLLOW": "started following you",
+    "COMMENT": "commented on your post",
+    "LIKE": "liked your post",
+    "MENTION": "mentioned you"
+  },
+  "PAGES": {
+    "CHANGE_PASSWORD": "Change password — this page is not implemented yet.",
+    "FORGOT_PASSWORD": "Forgot password — this page is not implemented yet.",
+    "RESET_PASSWORD": "Reset password — this page is not implemented yet.",
+    "NOT_FOUND": "Page not found.",
+    "ABOUT": "Profile information."
+  },
+  "ERRORS": {
+    "NETWORK": "Could not reach the server. Please try again.",
+    "REQUEST": "The request failed. Please try again.",
+    "UNAUTHORIZED": "Your session has expired. Please log in again.",
+    "FORBIDDEN": "You do not have permission to do this.",
+    "NOT_FOUND": "The requested item was not found.",
+    "CONFLICT": "These details are already in use.",
+    "RATE_LIMIT": "Too many requests. Please try again shortly.",
+    "NAVIGATION": "Signed in, but the page could not open. Please refresh.",
+    "STORAGE": "Unable to save your session in this browser."
+  },
+  "LANGUAGE": {
+    "SELECT": "Choose language"
+  },
+  "PRIVACY": {
+    "public": "public",
+    "following": "followers",
+    "only_me": "only me"
+  }
 }

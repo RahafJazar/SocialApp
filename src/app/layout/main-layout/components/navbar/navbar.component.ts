@@ -1,3 +1,5 @@
+import { BtnLanguageComponent } from '../../../../shared/ui/btn-language/btn-language.component';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from "@angular/router";
 import { AuthService } from '../../../../core/auth/services/auth.service';
@@ -5,7 +7,7 @@ import { UserInfo } from '../../../../core/models/user-data.interface';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [BtnLanguageComponent, TranslatePipe, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })

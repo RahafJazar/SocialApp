@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Post } from '../../../../core/models/posts-data.interface';
@@ -6,7 +7,7 @@ import { PostCommentsComponent } from '../../../feed/components/feed-content/com
 
 @Component({
   selector: 'app-profile-posts',
-  imports: [TimeAgoPipe, RouterLink, PostCommentsComponent],
+  imports: [TranslatePipe, TimeAgoPipe, RouterLink, PostCommentsComponent],
   templateUrl: './profile-posts.component.html',
   styleUrl: './profile-posts.component.css',
 })

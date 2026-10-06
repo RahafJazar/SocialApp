@@ -1,47 +1,35 @@
-import { numberAttribute, Pipe, PipeTransform } from '@angular/core';
+import { inject, Pipe, PipeTransform } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
-@Pipe({
-  name: 'timeAgo'
-})
+@Pipe({ name: 'timeAgo', pure: false })
 export class TimeAgoPipe implements PipeTransform {
+  private readonly translate = inject(TranslateService);
+  private locale = '';
+  private formatter!: Intl.RelativeTimeFormat;
+  private cacheKey = '';
+  private result = '';
 
-  transform(createdAt: string | Date): unknown {
-    const now = new Date();
-    const date = new Date(createdAt);
-
-
-    //diff in seconds
-    //divide on 1000 ->  because getTime() return milliseconds and 1000ms=1s
-    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-    if (diffInSeconds < 60) {
-      //إذا مرّ أقل من دقيقة، اعرض just now.
-      return 'just now';
+  transform(createdAt: string | Date | null | undefined): string {
+    if (!createdAt) return '';
+    const timestamp = new Date(createdAt).getTime();
+    if (!Number.isFinite(timestamp)) return '';
+    const language = this.translate.getCurrentLang() === 'ar' ? 'ar' : 'en';
+    if (language !== this.locale) {
+      this.locale = language;
+      this.formatter = new Intl.RelativeTimeFormat(language, { numeric: 'auto' });
     }
-
-    const diffInMinutes = Math.floor((diffInSeconds / 60));
-    if (diffInMinutes < 60) {
-      return `${diffInMinutes} minute${diffInMinutes === 1 ? '' : 's'} ago`
+    const seconds = Math.max(0, Math.floor((Date.now() - timestamp) / 1000));
+    let value = 0;
+    let unit: Intl.RelativeTimeFormatUnit = 'second';
+    if (seconds >= 31536000) { value = Math.floor(seconds / 31536000); unit = 'year'; }
+    else if (seconds >= 86400) { value = Math.floor(seconds / 86400); unit = 'day'; }
+    else if (seconds >= 3600) { value = Math.floor(seconds / 3600); unit = 'hour'; }
+    else if (seconds >= 60) { value = Math.floor(seconds / 60); unit = 'minute'; }
+    const key = `${language}:${unit}:${value}`;
+    if (key !== this.cacheKey) {
+      this.cacheKey = key;
+      this.result = this.formatter.format(-value, unit);
     }
-
-
-    const diffInHours = Math.floor(diffInMinutes / 60);
-
-    if (diffInHours < 24) {
-      return `${diffInHours} hour${diffInHours === 1 ? '' : 's'} ago`
-    }
-
-
-    const diffInDays = Math.floor(diffInHours / 24);
-
-    if (diffInDays < 365) {
-      return `${diffInDays} day${diffInDays === 1 ? '' : 's'} ago`
-    }
-
-
-    const diffInYears = Math.floor(diffInDays / 365);
-    return `${diffInYears} year${diffInYears === 1 ? '' : 's'} ago`
-
-
+    return this.result;
   }
-
 }

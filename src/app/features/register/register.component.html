@@ -1,17 +1,18 @@
 <section class="min-h-screen bg-second-color px-4 py-8 sm:py-12 lg:flex lg:items-center relative">
+    <app-btn-language></app-btn-language>
 
     <div class="container 2xl:w-6xl z-99">
         <div class="flex w-full flex-col items-center gap-6 sm:gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div class="order-2 w-full max-w-3xl text-center lg:order-1 lg:text-left">
+            <div class="order-2 w-full max-w-3xl text-center lg:order-1 lg:text-start">
                 <div class="flex  justify-center  items-center gap-1">
                     <div>
                         <h1
                             class="hidden text-5xl font-extrabold tracking-tight  bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400 sm:text-6xl lg:block mb-[30px]">
-                            Togetherly
+                            {{ 'BRAND.NAME' | translate }}
                         </h1>
-                        <p class="hidden md:block text-sm md:text-2xl md:max-w-[75%]">Explore the things <span
+                        <p class="hidden md:block text-sm md:text-2xl md:max-w-[75%]">{{ 'BRAND.TAGLINE' | translate }} <span
                                 class="text-blue-500">
-                                you love .</span>
+                                {{ 'BRAND.TAGLINE_HIGHLIGHT' | translate }}</span>
                         </p>
                     </div>
 
@@ -28,22 +29,22 @@
                     <div class="mb-5 grid grid-cols-2 rounded-xl bg-slate-100 p-1">
                         <button routerLink="/login" routerLinkActive="rounded-lg shadow-sm bg-white text-main-color"
                             class="py-2 text-sm font-extrabold transition cursor-pointer">
-                            Login
+                            {{ 'AUTH.TABS.LOGIN' | translate }}
                         </button>
                         <button routerLink="/register" routerLinkActive="rounded-lg shadow-sm bg-white text-main-color"
                             class="py-2 text-sm font-extrabold transition cursor-pointer">
-                            Register
+                            {{ 'AUTH.TABS.REGISTER' | translate }}
                         </button>
                     </div>
 
-                    <h2 class="text-2xl font-extrabold text-slate-900">Create a new account</h2>
-                    <p class="mt-1 text-sm text-slate-500">It is quick and easy.</p>
+                    <h2 class="text-2xl font-extrabold text-slate-900">{{ 'AUTH.REGISTER.TITLE' | translate }}</h2>
+                    <p class="mt-1 text-sm text-slate-500">{{ 'AUTH.REGISTER.SUBTITLE' | translate }}</p>
 
                     <form class="mt-5 space-y-3.5" [formGroup]="registerForm" (ngSubmit)="submitForm()">
                         <div>
                             <div class="relative">
                                 <span
-                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-slate-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="lucide lucide-user" aria-hidden="true">
@@ -54,17 +55,17 @@
                                 <input
                                     [class]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched ? 'border-rose-500' : 'border-slate-200'"
                                     class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white  focus:ring-0 "
-                                    type="text" placeholder="Email or username" name="name" formControlName="name" />
+                                    type="text" [placeholder]="'AUTH.REGISTER.NAME' | translate" name="name" formControlName="name" />
                             </div>
                             <!---Error Alert-->
                             @let nameControl=registerForm.get('name');
                             @if(nameControl?.invalid && nameControl?.touched){
                             <p class="mt-1 font-semibold text-rose-600">
                                 @if(nameControl?.hasError('required')){
-                                <span class="block">Name is required</span>
+                                <span class="block">{{ 'VALIDATION.NAME_REQUIRED' | translate }}</span>
                                 }
                                 @else if(nameControl?.hasError('minlength')) {
-                                <span class="block">Name must be at least 3 characters</span>
+                                <span class="block">{{ 'VALIDATION.NAME_LENGTH' | translate }}</span>
                                 }
 
                             </p>
@@ -75,7 +76,7 @@
                         <div>
                             <div class="relative">
                                 <span
-                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-slate-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="lucide lucide-at-sign" aria-hidden="true">
@@ -85,7 +86,7 @@
                                 </span>
                                 <input
                                     class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white  focus:ring-0 "
-                                    type="text" placeholder="Username (optional)" name="username"
+                                    type="text" [placeholder]="'AUTH.REGISTER.USERNAME' | translate" name="username"
                                     formControlName="username" />
                             </div>
 
@@ -93,7 +94,7 @@
                         <div>
                             <div class="relative">
                                 <span
-                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-slate-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="lucide lucide-at-sign" aria-hidden="true">
@@ -104,7 +105,7 @@
                                 <input
                                     [class]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched ? 'border-rose-500' : 'border-slate-200'"
                                     class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white   focus:ring-0 "
-                                    type="email" placeholder="Email address" name="email" formControlName="email" />
+                                    type="email" dir="ltr" [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate" name="email" formControlName="email" />
                             </div>
                             <!---Error Alert-->
                             @let emailControl=registerForm.get('email');
@@ -112,10 +113,10 @@
                             <p class="mt-1 font-semibold text-rose-600">
 
                                 @if(emailControl?.hasError('required')){
-                                <span class="block">Email is required</span>
+                                <span class="block">{{ 'VALIDATION.EMAIL.REQUIRED' | translate }}</span>
                                 }
                                 @else if (emailControl?.hasError('email')) {
-                                <span class="block">Please enter valid email</span>
+                                <span class="block">{{ 'VALIDATION.EMAIL.INVALID' | translate }}</span>
                                 }
 
 
@@ -126,7 +127,7 @@
                         <div>
                             <div class="relative">
                                 <span
-                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-slate-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="lucide lucide-user" aria-hidden="true">
@@ -139,17 +140,17 @@
 
                                 <select name="gender"
                                     [class]="registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched ? 'border-rose-500' : 'border-slate-200'"
-                                    class="w-full rounded-xl border bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-800 outline-none transition focus:bg-white  "
+                                    class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white  "
                                     formControlName="gender">
-                                    <option selected disabled hidden value="">Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
+                                    <option selected disabled hidden value="">{{ 'AUTH.REGISTER.GENDER' | translate }}</option>
+                                    <option value="male">{{ 'AUTH.REGISTER.MALE' | translate }}</option>
+                                    <option value="female">{{ 'AUTH.REGISTER.FEMALE' | translate }}</option>
                                 </select>
                                 @if(registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched ){
                                 <p class="mt-1 font-semibold text-rose-600">
 
                                     @if(registerForm.get('gender')?.hasError('required')){
-                                    <span class="block">Gender is required</span>
+                                    <span class="block">{{ 'VALIDATION.GENDER_REQUIRED' | translate }}</span>
                                     }
 
 
@@ -163,7 +164,7 @@
                         <div>
                             <div class="relative">
                                 <span
-                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-slate-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true">
@@ -176,14 +177,14 @@
                                 <input
                                     [class]="registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched ? 'border-rose-500' : 'border-slate-200'"
                                     class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white  focus:ring-0 "
-                                    type="date" placeholder="Date of birth" name="dateOfBirth"
+                                    type="date" [placeholder]="'AUTH.REGISTER.DOB' | translate" name="dateOfBirth"
                                     formControlName="dateOfBirth" />
                             </div>
                             <!---Error-->
                             @if (registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched) {
                             <p class="mt-1 font-semibold text-rose-600">
                                 @if(registerForm.get('dateOfBirth')?.hasError('required')){
-                                <span class="block">DoB is required</span>
+                                <span class="block">{{ 'VALIDATION.DOB_REQUIRED' | translate }}</span>
                                 }
 
                             </p>
@@ -194,7 +195,7 @@
                         <div>
                             <div class="relative">
                                 <span
-                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-slate-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="lucide lucide-key-round" aria-hidden="true">
@@ -207,7 +208,7 @@
                                 <input #passInput
                                     [class]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'border-rose-500' : 'border-slate-200'"
                                     class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white  focus:ring-0    "
-                                    type="password" placeholder="Password" name="password" formControlName="password" />
+                                    type="password" [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate" name="password" formControlName="password" />
 
                                 <i [class]="{ 
                                     'fa-regular' :true,
@@ -222,11 +223,11 @@
                             @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
                             <p class="mt-1 font-semibold text-rose-600">
                                 @if(registerForm.get('password')?.hasError('required')){
-                                <span class="block">Password is required</span>
+                                <span class="block">{{ 'VALIDATION.PASSWORD.REQUIRED' | translate }}</span>
 
                                 }
                                 @else if ( registerForm.get('password')?.hasError('pattern') ) {
-                                <span class="block">Password must match the pattern</span>
+                                <span class="block">{{ 'VALIDATION.PASSWORD.PATTERN' | translate }}</span>
                                 }
 
                             </p>
@@ -236,7 +237,7 @@
                         <div>
                             <div class="relative">
                                 <span
-                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-slate-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="lucide lucide-key-round" aria-hidden="true">
@@ -249,7 +250,7 @@
                                 <input #repassInp
                                     [class]="registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched ? 'border-rose-500' : 'border-slate-200'"
                                     class="w-full rounded-xl border bg-slate-50 py-3 ps-11 pe-4 text-sm text-slate-800 outline-none transition focus:bg-white  focus:ring-0"
-                                    type="" placeholder="Confirm password" name="rePassword"
+                                    type="" [placeholder]="'AUTH.REGISTER.CONFIRM' | translate" name="rePassword"
                                     formControlName="rePassword" />
                                 <i [class]="{ 
                                     'fa-regular' :true,
@@ -264,10 +265,10 @@
                             @if (registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched) {
                             <p class="mt-1 font-semibold text-rose-600">
                                 @if(registerForm.get('rePassword')?.hasError('required')){
-                                <span class="block">RePassword is required</span>
+                                <span class="block">{{ 'VALIDATION.CONFIRM_REQUIRED' | translate }}</span>
                                 }
                                 @else if (registerForm.get('rePassword')?.hasError('mismatch') ) {
-                                <span class="block">RePassword must match the password</span>
+                                <span class="block">{{ 'VALIDATION.CONFIRM_MATCH' | translate }}</span>
                                 }
                             </p>
                             }
@@ -276,7 +277,7 @@
                         <button
                             class="w-full rounded-xl py-3 text-base font-extrabold text-white transition disabled:opacity-60 bg-main-color hover:bg-main-color disabled:cursor-not-allowed"
                             (click)="submitForm()">
-                            Create New Account
+                            {{ 'AUTH.REGISTER.SUBMIT' | translate }}
                             @if(loading){
                             <i class="fa-solid fa-spinner animate-spin"></i>
                             }
@@ -285,7 +286,7 @@
                         @if(errorMsg ){
                         <p class="mt-1 font-semibold text-rose-600 border bg-rose-100 px-4 py-1.5 rounded-xl">
 
-                            {{errorMsg}}
+                            {{ errorMsg | translate }}
 
 
                         </p>

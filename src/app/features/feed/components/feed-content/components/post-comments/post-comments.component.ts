@@ -1,3 +1,5 @@
+import { TimeAgoPipe } from '../../../../../../shared/pipes/time-ago-pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, contentChild, EventEmitter, inject, Input, OnInit, Output, output } from '@angular/core';
 import { CommentsService } from './services/comments.service';
 import { comment } from './models/comments-data.interface';
@@ -7,7 +9,7 @@ import { count } from 'rxjs';
 
 @Component({
   selector: 'app-post-comments',
-  imports: [ReactiveFormsModule],
+  imports: [TimeAgoPipe, TranslatePipe, ReactiveFormsModule],
   templateUrl: './post-comments.component.html',
   styleUrl: './post-comments.component.css',
 })

@@ -1,10 +1,11 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, ContentChild, contentChild, viewChild } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { Popover, PopoverModule } from 'primeng/popover';
 @Component({
   selector: 'app-popover',
-  imports: [PopoverModule, ButtonModule, InputTextModule],
+  imports: [TranslatePipe, PopoverModule, ButtonModule, InputTextModule],
   templateUrl: './popover.component.html',
   styleUrl: './popover.component.css',
 })

@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit, model, ValueProvider } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +16,7 @@ import { ProfileService } from '../../../../core/services/profile.service';
 
 @Component({
   selector: 'app-feed-content',
-  imports: [ReactiveFormsModule, PostCommentsComponent, RouterLink, DatePipe, TimeAgoPipe, InfiniteScrollDirective, DialogComponent, DialogModule, FormsModule],
+  imports: [TranslatePipe, ReactiveFormsModule, PostCommentsComponent, RouterLink, DatePipe, TimeAgoPipe, InfiniteScrollDirective, DialogComponent, DialogModule, FormsModule],
   templateUrl: './feed-content.component.html',
   styleUrl: './feed-content.component.css',
 })

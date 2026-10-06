@@ -11,117 +11,63 @@ import { BtnLanguageComponent } from '../../shared/ui/btn-language/btn-language.
 @Component({
   selector: 'app-login',
   imports: [RouterLink, RouterLinkActive, ReactiveFormsModule, TranslatePipe, BtnLanguageComponent],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  templateUrl: './login.component.html', styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
-  // Temporary diagnostics: set false after investigating the phone result.
-  private readonly debugLogin = true;
   errorMsg = '';
   loading = false;
   loginSub$ = new Subscription();
   loginForm: FormGroup = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.pattern(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
-    )]],
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)]]
   });
 
   submitForm(): void {
     if (this.loading) return;
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
-    }
+    if (this.loginForm.invalid) { this.loginForm.markAllAsTouched(); return; }
     this.errorMsg = '';
     this.loading = true;
-    let receivedResponse = false;
+    let received = false;
     this.loginSub$ = this.authService.signIn(this.loginForm.getRawValue()).subscribe({
-      next: (resp: UserDataResponse | null) => {
-        receivedResponse = true;
-        // This method handles its own synchronous and asynchronous failures.
-        void this.finishLogin(resp);
-      },
-      error: (err: HttpErrorResponse) => {
+      next: (response: UserDataResponse) => { received = true; void this.finishLogin(response); },
+      error: (error: HttpErrorResponse) => {
+        this.errorMsg = error.status === 0 ? 'ERRORS.NETWORK' : 'AUTH.LOGIN.ERROR_FALLBACK';
         this.loading = false;
-        this.errorMsg = 'Login request failed. Please try again.';
-        this.report(`HTTP ERROR\nstatus=${err?.status ?? 'unknown'}`);
       },
       complete: () => {
-        // Completion must not clear loading before navigation has finished.
-        if (!receivedResponse) {
-          this.loading = false;
-          this.errorMsg = 'Login completed without a response.';
-          this.report('EMPTY RESPONSE: complete ran without next.');
-        }
-      },
+        if (!received) { this.errorMsg = 'AUTH.LOGIN.ERROR_FALLBACK'; this.loading = false; }
+      }
     });
   }
 
-  private async finishLogin(resp: UserDataResponse | null): Promise<void> {
-    const trace: string[] = ['1. NEXT received'];
-    let stage = 'response validation';
+  private async finishLogin(response: UserDataResponse): Promise<void> {
+    let stage = 'validation';
     try {
-      const token = resp?.data?.token;
-      const user = resp?.data?.user;
-      const hasToken = typeof token === 'string' && token.trim().length > 0;
-      const hasUser = !!user && typeof user === 'object' && !Array.isArray(user)
-        && typeof user._id === 'string' && user._id.length > 0;
-      trace.push(`success=${resp?.success === true}; tokenPresent=${hasToken}; userPresent=${hasUser}`);
-      if (resp?.success !== true || !hasToken || !hasUser) {
-        this.errorMsg = 'Login response was unsuccessful or missing session data.';
-        this.report([...trace, 'STOP: invalid login response'].join('\n'));
-        return;
+      if (!response?.success || !response.data?.token || !response.data?.user?._id) {
+        this.errorMsg = 'AUTH.LOGIN.ERROR_FALLBACK'; return;
       }
-
-      stage = 'saving session';
-      const serializedUser = JSON.stringify(user);
+      stage = 'storage';
       const previousToken = localStorage.getItem('socialToken');
       const previousUser = localStorage.getItem('userData');
       try {
-        localStorage.setItem('userData', serializedUser);
-        localStorage.setItem('socialToken', token);
-        if (localStorage.getItem('socialToken') !== token
-          || localStorage.getItem('userData') !== serializedUser) {
-          throw new Error('SessionReadbackFailed');
-        }
+        localStorage.setItem('userData', JSON.stringify(response.data.user));
+        localStorage.setItem('socialToken', response.data.token);
       } catch (error) {
-        // Restore the previous session if either write failed.
         try {
-          previousToken === null ? localStorage.removeItem('socialToken')
-            : localStorage.setItem('socialToken', previousToken);
-          previousUser === null ? localStorage.removeItem('userData')
-            : localStorage.setItem('userData', previousUser);
-        } catch { /* Storage may be inaccessible; preserve the original failure. */ }
+          previousToken === null ? localStorage.removeItem('socialToken') : localStorage.setItem('socialToken', previousToken);
+          previousUser === null ? localStorage.removeItem('userData') : localStorage.setItem('userData', previousUser);
+        } catch {}
         throw error;
       }
-      trace.push('2. Session saved and read back');
-
       stage = 'navigation';
-      const navigated = await this.router.navigate(['/feed']);
-      const atFeed = this.router.url.split('?')[0].split('#')[0] === '/feed';
-      trace.push(`3. Navigation resolved=${navigated}; atFeed=${atFeed}`);
-      if (!navigated || !atFeed) {
-        this.errorMsg = 'Session saved, but navigation to the feed did not finish.';
-      }
-      this.report(trace.join('\n'));
-    } catch (error: unknown) {
-      this.errorMsg = `Login stopped during ${stage}.`;
-      // Do not display raw responses, tokens, passwords, or user details.
-      this.report([...trace, `STOP: ${stage}`, `errorType=${error instanceof Error ? error.name : typeof error}`].join('\n'));
-    } finally {
-      this.loading = false;
-    }
+      if (!await this.router.navigate(['/feed'])) this.errorMsg = 'ERRORS.NAVIGATION';
+    } catch {
+      this.errorMsg = stage === 'storage' ? 'ERRORS.STORAGE' : stage === 'navigation' ? 'ERRORS.NAVIGATION' : 'AUTH.LOGIN.ERROR_FALLBACK';
+    } finally { this.loading = false; }
   }
 
-  private report(message: string): void {
-    if (this.debugLogin) alert(message);
-  }
-
-  ngOnDestroy(): void {
-    this.loginSub$.unsubscribe();
-  }
+  ngOnDestroy(): void { this.loginSub$.unsubscribe(); }
 }

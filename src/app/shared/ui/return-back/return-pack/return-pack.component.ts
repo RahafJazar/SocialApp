@@ -1,9 +1,10 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output, outputBinding } from '@angular/core';
 
 @Component({
   selector: 'app-return-pack',
-  imports: [],
+  imports: [TranslatePipe, ],
   templateUrl: './return-pack.component.html',
   styleUrl: './return-pack.component.css',
 })

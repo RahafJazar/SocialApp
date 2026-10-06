@@ -1,10 +1,10 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { MyTranslateService } from '../../../core/services/my-translate.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-btn-language',
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './btn-language.component.html',
   styleUrl: './btn-language.component.css',
 })

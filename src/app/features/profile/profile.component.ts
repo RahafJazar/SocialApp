@@ -1,4 +1,5 @@
-import { DatePipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { LocalizedDatePipe } from '../../shared/pipes/localized-date.pipe';
 import { Component, inject, OnInit } from '@angular/core';
 import { FollowDataResponse, Suggestion } from '../../core/models/follow-data-response.interface';
 import { Post } from '../../core/models/posts-data.interface';
@@ -14,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
-  imports: [DatePipe, ProfileHeaderComponent, ProfilePostsComponent, ProfileBookmarksComponent],
+  imports: [TranslatePipe, LocalizedDatePipe, ProfileHeaderComponent, ProfilePostsComponent, ProfileBookmarksComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })

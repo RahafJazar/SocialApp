@@ -1,12 +1,11 @@
-<div class="inline-flex mb-4  gap-4   p-2 border-2  border-brand-subtle   rounded-md shadow-xl">
-    <button class="rounded-md px-2 py-1 outline-0" (click)="change('en')" [class]="{
-    'bg-blue-400':translateService.getCurrentLang() =='en',
-    'text-white':translateService.getCurrentLang()=='en',
-    'bg-white' : translateService.getCurrentLang() !='en',
-    'text-black':translateService.getCurrentLang()!='en'}">En</button>
-    <button class="rounded-md px-2 py-1 outline-0" (click)="change('ar')" [class]="{
-    'bg-blue-400':translateService.getCurrentLang() =='ar',
-    'text-white':translateService.getCurrentLang()=='ar',
-    'bg-white' : translateService.getCurrentLang() !='ar',
-    'text-black':translateService.getCurrentLang()!='ar'}">Ar</button>
+<div class="inline-flex gap-1 rounded-lg border border-slate-200 bg-white p-1 text-sm"
+    role="group" [attr.aria-label]="'LANGUAGE.SELECT' | translate">
+  <button type="button" lang="en" (click)="change('en')"
+      class="rounded-md px-2 py-1 text-slate-700"
+      [class.bg-blue-100]="translateService.getCurrentLang() === 'en'"
+      [attr.aria-pressed]="translateService.getCurrentLang() === 'en'">English</button>
+  <button type="button" lang="ar" (click)="change('ar')"
+      class="rounded-md px-2 py-1 text-slate-700"
+      [class.bg-blue-100]="translateService.getCurrentLang() === 'ar'"
+      [attr.aria-pressed]="translateService.getCurrentLang() === 'ar'">العربية</button>
 </div>

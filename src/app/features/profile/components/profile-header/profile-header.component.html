@@ -10,8 +10,8 @@
                     <img [src]="userData.photo" [alt]="userData.name"
                         class="size-28 rounded-full border-4 border-white object-cover bg-slate-200 shadow-md sm:size-32" />
                     <label
-                        class="absolute bottom-1 right-1 flex size-9 cursor-pointer items-center justify-center rounded-full bg-main-color text-white shadow hover:bg-[#001f6b]"
-                        title="Upload profile photo">
+                        class="absolute bottom-1 end-1 flex size-9 cursor-pointer items-center justify-center rounded-full bg-main-color text-white shadow hover:bg-[#001f6b]"
+                        [title]="'PROFILE.UPLOAD' | translate">
                         <i class="fa-solid fa-camera text-sm"></i>
                         <input type="file" accept="image/*" class="hidden" />
                     </label>
@@ -28,11 +28,11 @@
             <div class="flex flex-wrap gap-2 sm:pb-1">
                 <button type="button"
                     class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50">
-                    Change Password
+                    {{ 'NAV.CHANGE_PASSWORD' | translate }}
                 </button>
                 <button type="button"
                     class="rounded-xl bg-main-color px-4 py-2 text-sm font-bold text-white transition hover:bg-[#001f6b]">
-                    Follow
+                    {{ 'FRIENDS.FOLLOW' | translate }}
                 </button>
             </div>
         </div>
@@ -41,15 +41,15 @@
         <div class="mt-5 flex flex-wrap gap-6 border-t border-slate-100 pt-4">
             <div>
                 <p class="text-lg font-extrabold text-slate-900">{{userData.followersCount}}</p>
-                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Followers</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">{{ 'PROFILE.FOLLOWERS' | translate }}</p>
             </div>
             <div>
                 <p class="text-lg font-extrabold text-slate-900">{{userData.followingCount}}</p>
-                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Following</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">{{ 'PROFILE.FOLLOWING' | translate }}</p>
             </div>
             <div>
                 <p class="text-lg font-extrabold text-slate-900">{{userData.bookmarksCount}}</p>
-                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Bookmarks</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">{{ 'PROFILE.BOOKMARKS' | translate }}</p>
             </div>
         </div>
     </div>

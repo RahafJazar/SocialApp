@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, inject, OnInit } from '@angular/core';
 
 import {
@@ -13,7 +14,7 @@ import { ReturnPackComponent } from '../../../../../shared/ui/return-back/return
 
 @Component({
   selector: 'app-all-siggested',
-  imports: [SearchPipe, ReturnPackComponent],
+  imports: [TranslatePipe, SearchPipe, ReturnPackComponent],
   templateUrl: './all-siggested.component.html',
   styleUrl: './all-siggested.component.css',
 })

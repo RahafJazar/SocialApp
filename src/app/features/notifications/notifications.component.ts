@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { Notification } from '../../core/models/notifications-data.interface';
 import { ProfileService } from '../../core/services/profile.service';
@@ -7,7 +8,7 @@ import { TimeAgoPipe } from '../../shared/pipes/time-ago-pipe';
 import { Router } from '@angular/router';
 @Component({
     selector: 'app-notifications',
-    imports: [NgxPaginationModule, TimeAgoPipe],
+    imports: [TranslatePipe, NgxPaginationModule, TimeAgoPipe],
     templateUrl: './notifications.component.html',
     styleUrl: './notifications.component.css',
 })
