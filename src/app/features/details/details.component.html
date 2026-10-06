@@ -21,14 +21,17 @@
 
                         @if (postData.user._id === userId) {
                         <select class="border-none bg-transparent cursor-pointer ring-0 py-0 px-2 text-xs">
-                            <option value="public" [selected]="postData.privacy === 'public'">{{ 'POST.PUBLIC' | translate }}</option>
-                            <option value="following" [selected]="postData.privacy === 'following'">{{ 'POST.FOLLOWERS' | translate }}</option>
-                            <option value="only_me" [selected]="postData.privacy === 'only_me'">{{ 'POST.ONLY_ME' | translate }}</option>
+                            <option value="public" [selected]="postData.privacy === 'public'">{{ 'POST.PUBLIC' |
+                                translate }}</option>
+                            <option value="following" [selected]="postData.privacy === 'following'">{{ 'POST.FOLLOWERS'
+                                | translate }}</option>
+                            <option value="only_me" [selected]="postData.privacy === 'only_me'">{{ 'POST.ONLY_ME' |
+                                translate }}</option>
                         </select>
                         }
                         @else {
-                        <span
-                            class="border-none bg-transparent cursor-pointer ring-0 py-0 px-2 text-xs">{{ ('PRIVACY.' + postData.privacy) | translate }}</span>
+                        <span class="border-none bg-transparent cursor-pointer ring-0 py-0 px-2 text-xs">{{ ('PRIVACY.'
+                            + postData.privacy) | translate }}</span>
                         }
 
                     </div>
@@ -83,7 +86,8 @@
         }
 
         @if (postData.image) {
-        <img [src]="postData.image" class="w-full max-h-90 object-cover rounded shadow mt-2" [alt]="'POST.IMAGE' | translate" />
+        <img [src]="postData.image" class="w-full max-h-90 object-cover rounded shadow mt-2"
+            [alt]="'POST.IMAGE' | translate" />
         }
 
     </div>
@@ -97,8 +101,10 @@
             <span>{{ 'POST.LIKES' | translate: {count: postData.likesCount} }}</span>
         </div>
         <div class="flex items-center gap-3">
-            <span class="cursor-pointer hover:underline">{{ 'POST.SHARES' | translate: {count: postData.sharesCount} }}</span>
-            <span class="cursor-pointer hover:underline">{{ 'POST.COMMENTS_COUNT' | translate: {count: postData.commentsCount} }}</span>
+            <span class="cursor-pointer hover:underline">{{ 'POST.SHARES' | translate: {count: postData.sharesCount}
+                }}</span>
+            <span class="cursor-pointer hover:underline">{{ 'POST.COMMENTS_COUNT' | translate: {count:
+                postData.commentsCount} }}</span>
 
         </div>
     </div>
