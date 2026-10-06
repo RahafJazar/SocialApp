@@ -63,6 +63,7 @@ export class LoginComponent {
       this.loginSub$ = this.authService.signIn(this.loginForm.value).subscribe(
         {
           next: (resp: UserDataResponse) => {
+            alert(`Next reached  `)
             if (resp.success) {
               console.log(resp);
               localStorage.setItem("socialToken", resp.data.token);
@@ -84,7 +85,7 @@ export class LoginComponent {
           },
           complete: () => {
             this.loading = false;
-            alert('Login Response Recieved ')
+
           },
 
 
