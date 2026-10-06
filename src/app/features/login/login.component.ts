@@ -80,10 +80,13 @@ export class LoginComponent {
 
             this.errorMsg = err.error?.message ?? 'Something went wrong';
             this.loading = false;
+            alert(`Login Failed  with error : ${err.message} `)
           },
           complete: () => {
             this.loading = false;
-          }
+            alert('Login Response Recieved ')
+          },
+
 
 
         }
